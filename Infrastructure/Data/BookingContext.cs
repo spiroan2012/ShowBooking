@@ -24,6 +24,10 @@ namespace Infrastructure.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Hall>()
+                .HasMany(sh => sh.Shows)
+                .WithOne(sh => sh.Hall);
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly()); 
         }
     }

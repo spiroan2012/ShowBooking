@@ -19,7 +19,7 @@ namespace Infrastructure.Repositories
             _context = context;
         }
 
-        public void AddHall(Hall hall)
+        public void Add(Hall hall)
         {
             _context.Halls.Add(hall);
         }
@@ -32,12 +32,31 @@ namespace Infrastructure.Repositories
         public async Task<Hall> GetHallByIdAsync(int id)
         {
             return await _context.Halls
+                .Include(hall => hall.Shows)
                 .SingleOrDefaultAsync(h => h.Id == id);
+        }
+
+        public void Update(Hall hall)
+        {
+            _context.Entry(hall).State = EntityState.Modified;
+        }
+
+        public void AddShow(Hall hall, Show show)
+        {
+            hall.Shows.Add(show);
         }
 
         public async Task<bool> Complete()
         {
             return await _context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<IReadOnlyList<Show>> GetShowsOfHallAsync(int id)
+        {
+            var hall = await _context.Halls
+                .Include(p => p.Shows)
+                .SingleOrDefaultAsync(p => p.Id == id);
+            return hall?.Shows.ToList();
         }
     }
 }

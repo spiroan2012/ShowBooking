@@ -23,8 +23,11 @@ namespace Core.Entities
         [Range(0,60)]
         public int Capacity { get; set; }
         [Required]
+        [Phone]
         public string Phone { get; set; }
         [Required]
+        [EmailAddress]
         public string EmailAddress { get; set; }
+        public ICollection<Show> Shows { get; set; }
     }
 }

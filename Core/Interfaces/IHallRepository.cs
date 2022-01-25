@@ -11,7 +11,10 @@ namespace Core.Interfaces
     {
         Task<Hall> GetHallByIdAsync(int id);
         Task<IReadOnlyList<Hall>> GetAllHallsAsync();
-        void AddHall(Hall hall);
+        Task<IReadOnlyList<Show>> GetShowsOfHallAsync(int id);
+        void Add(Hall hall);
+        void AddShow(Hall hall, Show show);
         Task<bool> Complete();
+        void Update(Hall hall);
     }
 }

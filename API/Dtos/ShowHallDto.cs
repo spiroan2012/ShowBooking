@@ -1,9 +1,8 @@
-﻿using API.Dtos;
-using System.Collections.Generic;
+﻿using System;
 
-namespace API
+namespace API.Dtos
 {
-    public class HallDto
+    public class ShowHallDto
     {
         public int Id { get; init; }
         public string Title { get; set; }
@@ -12,6 +11,5 @@ namespace API
         public int Capacity { get; set; }
         public string Phone { get; set; }
         public string EmailAddress { get; set; }
-        public ICollection<ShowDto> Shows { get; set; }
     }
 }

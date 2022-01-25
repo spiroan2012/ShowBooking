@@ -3,15 +3,17 @@ using System;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(BookingContext))]
-    partial class BookingContextModelSnapshot : ModelSnapshot
+    [Migration("20220125161504_ChangeDateColumnType")]
+    partial class ChangeDateColumnType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -125,7 +127,7 @@ namespace Infrastructure.Migrations
                     b.Property<int>("Duration")
                         .HasColumnType("integer");
 
-                    b.Property<int>("HallId")
+                    b.Property<int?>("HallId")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("TimeStart")
@@ -170,17 +172,10 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Core.Entities.Show", b =>
                 {
                     b.HasOne("Core.Entities.Hall", "Hall")
-                        .WithMany("Shows")
-                        .HasForeignKey("HallId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("HallId");
 
                     b.Navigation("Hall");
-                });
-
-            modelBuilder.Entity("Core.Entities.Hall", b =>
-                {
-                    b.Navigation("Shows");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,8 +19,10 @@ namespace Core.Entities
         [MaxLength(600)]
         public string Description { get; init; }
         [Required]
+        [Column(TypeName = "date")]
         public DateTime DateStart { get; set; }
         [Required]
+        [Column(TypeName = "date")]
         public DateTime DateEnd { get; set; }
         [Required]
         public DateTime TimeStart { get; set; }

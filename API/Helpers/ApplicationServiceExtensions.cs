@@ -15,6 +15,7 @@ namespace API.Helpers
                 x.UseNpgsql(config.GetConnectionString("DefaultConnection")));
 
             services.AddScoped<IHallRepository, HallRepository>();
+            services.AddScoped<IShowRepository, ShowRepository>();
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
             return services;
         }
