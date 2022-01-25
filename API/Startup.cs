@@ -1,3 +1,4 @@
+using API.Helpers;
 using Core.Interfaces;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
@@ -36,17 +37,15 @@ namespace API
         public void ConfigureServices(IServiceCollection services)
         {
             //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-          //      .AddMicrosoftIdentityWebApi(Configuration.GetSection("AzureAd"));
-
+            //      .AddMicrosoftIdentityWebApi(Configuration.GetSection("AzureAd"));
+            services.AddApplicationServices(_configuration);
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
             });
 
-            services.AddDbContext<BookingContext>(x =>
-                x.UseNpgsql(_configuration.GetConnectionString("DefaultConnection")));
-            services.AddScoped<IHallRepository, HallRepository>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

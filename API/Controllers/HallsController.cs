@@ -1,4 +1,5 @@
-﻿using Core.Entities;
+﻿using AutoMapper;
+using Core.Entities;
 using Core.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,10 +13,12 @@ namespace API.Controllers
     public class HallsController : ControllerBase
     {
         private readonly IHallRepository _hallsRepository;
+        private readonly IMapper _mapper;
 
-        public HallsController(IHallRepository hallsRepository)
+        public HallsController(IHallRepository hallsRepository, IMapper mapper)
         {
             _hallsRepository = hallsRepository;
+            _mapper = mapper;
         }
 
         [HttpGet("all")]
@@ -52,16 +55,7 @@ namespace API.Controllers
 
             if (hall == null) return NotFound("The hall with id " + id + " was not found");
 
-            return Ok(new HallDto()
-            {
-                Id = hall.Id,
-                Title = hall.Title,
-                Description= hall.Description,
-                Address= hall.Address,
-                Capacity= hall.Capacity,
-                Phone= hall.Phone,
-                EmailAddress= hall.EmailAddress
-            });
+            return Ok(_mapper.Map<HallDto>(hall));
         }
     }
 }
