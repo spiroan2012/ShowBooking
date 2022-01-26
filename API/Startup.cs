@@ -1,3 +1,4 @@
+using API.Extensions;
 using API.Helpers;
 using Core.Interfaces;
 using Infrastructure.Data;
@@ -39,6 +40,7 @@ namespace API
             //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             //      .AddMicrosoftIdentityWebApi(Configuration.GetSection("AzureAd"));
             services.AddApplicationServices(_configuration);
+            services.AddIdentityServices(_configuration);
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

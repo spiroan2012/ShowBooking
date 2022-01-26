@@ -13,6 +13,7 @@ namespace API.Helpers
             CreateMap<HallUpdateDto, Hall>();
             CreateMap<ShowUpdateDto, Show>();
             CreateMap<CreateShowDto, Show>();
+            CreateMap<RegisterDto, AppUser>();
             CreateMap<Show, ShowDto>()
                 .ForMember(dest => dest.HallName, opt => opt.MapFrom(src => src.Hall.Title));
         }
