@@ -51,5 +51,17 @@ namespace Infrastructure.Repositories
         {
             _context.Entry(Show).State = EntityState.Modified;
         }
+
+        public void Delete(Show show)
+        {
+            _context.Shows.Remove(show);
+        }
+
+        public async Task<IReadOnlyList<Show>> GetShowsForSpecificDateAsync(DateTime dateGiven)
+        {
+            return await _context.Shows
+                .Where(p => dateGiven >= p.DateStart && dateGiven <= p.DateEnd )
+                .ToListAsync();
+        }
     }
 }

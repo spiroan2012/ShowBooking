@@ -4,6 +4,7 @@ using Core.Entities;
 using Core.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -78,6 +79,44 @@ namespace API.Controllers
 
             if (await _showRepository.Complete()) return Ok();
             return BadRequest("Failed to update the show " + showUpdateDto.Title);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteShow(int id)
+        {
+            var entityTodelete = await _showRepository.GetShowByIdAsync(id);
+
+            if (entityTodelete is null) return NotFound("Could not find show with id " + id);
+
+            _showRepository.Delete(entityTodelete);
+
+            if (await _showRepository.Complete()) return Ok();
+            return BadRequest("Failed to delete the show " + entityTodelete.Title);
+        }
+
+        [HttpPost("ChangeHallOfShow")]
+        public async Task<ActionResult> ChangeHallOfShow([FromQuery] int showId, [FromQuery] int newHallId)
+        {
+            var hall = _hallRepository.GetHallByIdAsync(newHallId).Result;
+
+            if (hall is null) return NotFound("Could not find hall with id " + newHallId);
+
+            Show show = _showRepository.GetShowByIdAsync(showId).Result;
+
+            if (show is null) return NotFound("Could not find show with id " + showId);
+
+            show.Hall = hall;
+
+            if (await _showRepository.Complete()) return Ok();
+            return BadRequest("Failed to change the hall of show "+show.Title+" to "+hall.Title);
+        }
+
+        [HttpGet("GetByDate")]
+        public async Task<ActionResult<IEnumerable<ShowDto>>> GetShowsForDate([FromQuery]DateTime dateGiven)
+        {
+            var shows = await _showRepository.GetShowsForSpecificDateAsync(dateGiven);
+
+            return Ok(_mapper.Map<List<ShowDto>>(shows));
         }
     }
 }
