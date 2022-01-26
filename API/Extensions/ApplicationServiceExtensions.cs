@@ -18,6 +18,7 @@ namespace API.Helpers
             services.AddScoped<IHallRepository, HallRepository>();
             services.AddScoped<IShowRepository, ShowRepository>();
             services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IBookingRepository, BookingRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
             return services;

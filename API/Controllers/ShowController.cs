@@ -1,4 +1,5 @@
 ﻿using API.Dtos;
+using API.Helpers;
 using AutoMapper;
 using Core.Entities;
 using Core.Interfaces;
@@ -16,12 +17,14 @@ namespace API.Controllers
     {
         private readonly IShowRepository _showRepository;
         private readonly IHallRepository _hallRepository;
+        private readonly IBookingRepository _bookingRepository;
         private readonly IMapper _mapper;
 
-        public ShowController(IShowRepository showRepository, IHallRepository hallRepository,IMapper mapper)
+        public ShowController(IShowRepository showRepository, IHallRepository hallRepository, IBookingRepository bookingRepository,IMapper mapper)
         {
             _showRepository = showRepository;
             _hallRepository = hallRepository;
+            _bookingRepository = bookingRepository;
             _mapper = mapper;
         }
 
@@ -38,7 +41,7 @@ namespace API.Controllers
         {
             var show = await _showRepository.GetShowByIdAsync(id);
 
-            if (show == null) return NotFound("The show with id " + id + " was not found");
+            if (show is null) return NotFound("The show with id " + id + " was not found");
 
             return Ok(_mapper.Map<ShowDto>(show));
         }
@@ -117,6 +120,16 @@ namespace API.Controllers
             var shows = await _showRepository.GetShowsForSpecificDateAsync(dateGiven);
 
             return Ok(_mapper.Map<List<ShowDto>>(shows));
+        }
+
+        [HttpGet("GetSeatsOfShow")]
+        public async Task<ActionResult<IEnumerable<SeatsShowDto>>> GetSeatsOfShow([FromQuery]int showId,[FromQuery] DateTime showDate)
+        {
+            string[] reservedSeats = await _bookingRepository.GetReservedSeatsForShow(showId, showDate);
+
+            var hall = await _showRepository.GetHallOfShowAsync(showId);
+
+            return BookingUtilityClass.CreateArrayOfSeats(reservedSeats, hall.Capacity);
         }
     }
 }

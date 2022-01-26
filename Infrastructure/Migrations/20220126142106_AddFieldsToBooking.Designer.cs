@@ -3,15 +3,17 @@ using System;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(BookingContext))]
-    partial class BookingContextModelSnapshot : ModelSnapshot
+    [Migration("20220126142106_AddFieldsToBooking")]
+    partial class AddFieldsToBooking
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -224,12 +226,17 @@ namespace Infrastructure.Migrations
                     b.Property<int?>("BookingId")
                         .HasColumnType("integer");
 
+                    b.Property<int?>("HallId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("SeatNumber")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
                     b.HasIndex("BookingId");
+
+                    b.HasIndex("HallId");
 
                     b.ToTable("Seats");
                 });
@@ -399,7 +406,13 @@ namespace Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("BookingId");
 
+                    b.HasOne("Core.Entities.Hall", "Hall")
+                        .WithMany()
+                        .HasForeignKey("HallId");
+
                     b.Navigation("Booking");
+
+                    b.Navigation("Hall");
                 });
 
             modelBuilder.Entity("Core.Entities.Show", b =>

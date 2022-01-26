@@ -16,6 +16,11 @@ namespace Core.Entities
         [Required]
         public DateTime BookingTimestamp { get; init; } = DateTime.Now;
         [Required]
+        public DateTime DateOfShow { get; set; }
+        [Required]
+        public AppUser User { get; set; }
+        [Required]
         public int NumOfSeats { get; init; } = 50;
+        public bool Appeared { get; set; }
     }
 }

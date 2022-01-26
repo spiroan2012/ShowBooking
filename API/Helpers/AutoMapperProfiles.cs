@@ -15,6 +15,7 @@ namespace API.Helpers
             CreateMap<CreateShowDto, Show>();
             CreateMap<RegisterDto, AppUser>();
             CreateMap<AppUser, UserDto>();
+            CreateMap<Booking, BookingDto>();
             CreateMap<Show, ShowDto>()
                 .ForMember(dest => dest.HallName, opt => opt.MapFrom(src => src.Hall.Title));
         }

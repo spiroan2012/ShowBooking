@@ -10,7 +10,6 @@ namespace Core.Entities
     {
         public int Id { get; init; }
         public Booking Booking { get; init; }
-        public Hall Hall { get; set; }
         public string SeatNumber { get; set; }
     }
 }

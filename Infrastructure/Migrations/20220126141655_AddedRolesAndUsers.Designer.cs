@@ -3,15 +3,17 @@ using System;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(BookingContext))]
-    partial class BookingContextModelSnapshot : ModelSnapshot
+    [Migration("20220126141655_AddedRolesAndUsers")]
+    partial class AddedRolesAndUsers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -165,14 +167,9 @@ namespace Infrastructure.Migrations
                     b.Property<int?>("ShowId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ShowId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Bookings");
                 });
@@ -224,12 +221,17 @@ namespace Infrastructure.Migrations
                     b.Property<int?>("BookingId")
                         .HasColumnType("integer");
 
+                    b.Property<int?>("HallId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("SeatNumber")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
                     b.HasIndex("BookingId");
+
+                    b.HasIndex("HallId");
 
                     b.ToTable("Seats");
                 });
@@ -384,13 +386,7 @@ namespace Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("ShowId");
 
-                    b.HasOne("Core.Entities.AppUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-
                     b.Navigation("Show");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Core.Entities.Seat", b =>
@@ -399,7 +395,13 @@ namespace Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("BookingId");
 
+                    b.HasOne("Core.Entities.Hall", "Hall")
+                        .WithMany()
+                        .HasForeignKey("HallId");
+
                     b.Navigation("Booking");
+
+                    b.Navigation("Hall");
                 });
 
             modelBuilder.Entity("Core.Entities.Show", b =>
