@@ -42,6 +42,7 @@ namespace API
             services.AddApplicationServices(_configuration);
             services.AddIdentityServices(_configuration);
             services.AddControllers();
+            services.AddCors();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
@@ -63,6 +64,11 @@ namespace API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(x => x.AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials()
+                .WithOrigins("http://localhost:4200"));
 
             app.UseAuthentication();
             app.UseAuthorization();

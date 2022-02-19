@@ -5,8 +5,9 @@
         class="form-control" 
         [formControl] = "ngControl.control" 
         placeholder={{label}}
+        style="margin-top: 25px; margin-bottom: 25px;"
     >
-    <div *ngIf = "ngControl.control?.errors?.required" class="invalid-feedback">Please enter a {{label}}</div>
+    <div *ngIf = "ngControl.control?.errors?.required" class="invalid-feedback">Παρακαλώ εισάγετε ένα {{label}}</div>
     <div *ngIf = "ngControl.control?.errors?.minlength" class="invalid-feedback">{{label}} must be at least {{ngControl.control.errors.minlength['requiredLength']}}</div>
     <div *ngIf = "ngControl.control?.errors?.isMatching" class="invalid-feedback">Passwords do not match</div>
 </div>
