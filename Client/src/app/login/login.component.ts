@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AccountService } from '../_services/account.service';
 
 @Component({
@@ -12,7 +13,7 @@ export class LoginComponent implements OnInit {
   validationErrors: string[] = [];
   model
 
-  constructor(private fb: FormBuilder, private accountService: AccountService) { }
+  constructor(private fb: FormBuilder, private accountService: AccountService, private router: Router) { }
 
   ngOnInit(): void {
     this.initializeForm();
@@ -27,7 +28,8 @@ export class LoginComponent implements OnInit {
 
   login(){
     this.accountService.login(this.loginForm.value).subscribe(response =>{
-      console.log("Login success");
+      //console.log("Login success");
+      this.router.navigateByUrl('/seat-booking');
     }, error =>{
       console.log("There was an error "+error.error);
     });

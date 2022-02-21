@@ -11,6 +11,13 @@ import { HomeComponent } from './home/home.component';
 import { ToastrModule } from 'ngx-toastr';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ErrorInterceptor } from './_interceptors/error.interceptor';
+import { BookingCalendarComponent } from './booking-calendar/booking-calendar.component';
+import { SeatBookingComponent } from './seat-booking/seat-booking.component';
+import { TicketManagementComponent } from './ticket-management/ticket-management.component';
+import { UserManagementComponent } from './user-management/user-management.component';
+import { EntranceRegisterComponent } from './entrance-register/entrance-register.component';
+import { HasRoleDirective } from './_directives/has-role.directive';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 @NgModule({
   declarations: [
@@ -18,7 +25,13 @@ import { ErrorInterceptor } from './_interceptors/error.interceptor';
     TextInputComponent,
     NavComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    BookingCalendarComponent,
+    SeatBookingComponent,
+    TicketManagementComponent,
+    UserManagementComponent,
+    EntranceRegisterComponent,
+    HasRoleDirective
   ],
   imports: [
     BrowserModule,
@@ -30,6 +43,7 @@ import { ErrorInterceptor } from './_interceptors/error.interceptor';
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right'
     }),
+    BsDropdownModule.forRoot()
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
