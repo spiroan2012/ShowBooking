@@ -8,6 +8,7 @@
         style="margin-top: 25px; margin-bottom: 25px;"
     >
     <div *ngIf = "ngControl.control?.errors?.required" class="invalid-feedback">Παρακαλώ εισάγετε ένα {{label}}</div>
-    <div *ngIf = "ngControl.control?.errors?.minlength" class="invalid-feedback">{{label}} must be at least {{ngControl.control.errors.minlength['requiredLength']}}</div>
-    <div *ngIf = "ngControl.control?.errors?.isMatching" class="invalid-feedback">Passwords do not match</div>
+    <div *ngIf = "ngControl.control?.errors?.minlength" class="invalid-feedback">{{label}} πρέπει να περιέχει τουλάχιστον {{ngControl.control.errors.minlength['requiredLength']}} χαρακτρήρες</div>
+    <div *ngIf = "ngControl.control?.errors?.isMatching" class="invalid-feedback">Οι κωδικοί δεν ταιριάζουν</div>
+    <div *ngIf = "ngControl.control?.errors?.invalidPattern" class="invalid-feedback">Ο κωδικός πρόσβασης πρέπει να είναι τουλάχιστον 8 χαρακτήρες και να περιέχει τουλάχιστον ένα κεφαλαίο γράμμα, ένα μικρό γράμμα,ένα αριθμό και κάποιο σύμβολο (π.χ. #$*&@)</div>
 </div>

@@ -1,0 +1,31 @@
+<form [formGroup] = "registerForm" (ngSubmit) = "registerForm.valid  && register()" autocomplete="off">
+    <h2 class="text-center text-primary">Sign Up</h2>
+    <hr>
+    <div class="form-group">
+        <label for="" class="controll-label" style="margin-right: 10px;">Είμαι: </label>
+        <label for="" class="radio-inline" >
+            <input type="radio" value="male" formControlName = 'gender'>Άνδρας
+            <input type="radio" value="female" formControlName = 'gender' class="ml-3">Γυναίκα
+        </label>
+    </div>
+    <app-text-input [formControl] = 'registerForm.controls["firstName"]' [label] = "'Όνομα'"></app-text-input>
+    <app-text-input [formControl] = 'registerForm.controls["lastName"]' [label] = "'Επώνυμο'"></app-text-input>
+    <app-text-input [formControl] = 'registerForm.controls["username"]' [label] = "'Όνομα χρήστη'"></app-text-input>
+
+    <app-date-input [formControl] = 'registerForm.controls["dateOfBirth"]' [label] = "'Ημερομηνία γέννησης'" [maxDate] = "maxDate"></app-date-input>
+    <app-text-input [formControl] = 'registerForm.controls["password"]' [label] = "'Κωδικός πρόσβασης'" [type] = "'password'"></app-text-input>
+    <app-text-input [formControl] = 'registerForm.controls["confirmPassword"]' [type] = "'password'" [label] = "'Επαλήθευση κωδικού'"></app-text-input>
+
+    <div class="row" *ngIf="validationErrors.length > 0">
+        <ul class="text-danger">
+            <li *ngFor="let error of validationErrors">
+                {{error}}
+            </li>
+        </ul>
+    </div>
+
+    <div class="form-group text-center">
+        <button class="btn btn-success mr-2" type="submit" [disabled] = '!registerForm.valid'>Εγγραφή</button>
+        <button class="btn btn-default mr-2" type="button" (click) = "cancel()">Ακύρωση</button>
+    </div>
+</form>

@@ -4,6 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TextInputComponent } from './_forms/text-input/text-input.component';
+import { DateInputComponent } from './_forms/date-input/date-input.component';
 import { NavComponent } from './nav/nav.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
@@ -18,6 +19,8 @@ import { UserManagementComponent } from './user-management/user-management.compo
 import { EntranceRegisterComponent } from './entrance-register/entrance-register.component';
 import { HasRoleDirective } from './_directives/has-role.directive';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { RegisterComponent } from './register/register.component';
+import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
 
 @NgModule({
   declarations: [
@@ -31,7 +34,9 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
     TicketManagementComponent,
     UserManagementComponent,
     EntranceRegisterComponent,
-    HasRoleDirective
+    HasRoleDirective,
+    RegisterComponent,
+    DateInputComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +48,8 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right'
     }),
-    BsDropdownModule.forRoot()
+    BsDropdownModule.forRoot(),
+    BsDatepickerModule.forRoot()
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
