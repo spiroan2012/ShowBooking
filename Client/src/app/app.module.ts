@@ -15,12 +15,18 @@ import { ErrorInterceptor } from './_interceptors/error.interceptor';
 import { BookingCalendarComponent } from './booking-calendar/booking-calendar.component';
 import { SeatBookingComponent } from './seat-booking/seat-booking.component';
 import { TicketManagementComponent } from './ticket-management/ticket-management.component';
-import { UserManagementComponent } from './user-management/user-management.component';
 import { EntranceRegisterComponent } from './entrance-register/entrance-register.component';
 import { HasRoleDirective } from './_directives/has-role.directive';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { RegisterComponent } from './register/register.component';
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
+import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
+import {TabsModule} from 'ngx-bootstrap/tabs'
+import { UserManagementComponent } from './admin/user-management/user-management.component';
+import { JwtInterceptor } from './_interceptors/jwt.interceptor';
+import { ConfirmDialogComponent } from './modals/confirm-dialog/confirm-dialog.component';
+import { RolesModalComponent } from './modals/roles-modal/roles-modal.component';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
   declarations: [
@@ -32,11 +38,14 @@ import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
     BookingCalendarComponent,
     SeatBookingComponent,
     TicketManagementComponent,
-    UserManagementComponent,
     EntranceRegisterComponent,
     HasRoleDirective,
     RegisterComponent,
-    DateInputComponent
+    DateInputComponent,
+    AdminPanelComponent,
+    UserManagementComponent,
+    ConfirmDialogComponent,
+    RolesModalComponent
   ],
   imports: [
     BrowserModule,
@@ -49,10 +58,13 @@ import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
       positionClass: 'toast-bottom-right'
     }),
     BsDropdownModule.forRoot(),
-    BsDatepickerModule.forRoot()
+    BsDatepickerModule.forRoot(),
+    TabsModule.forRoot(),
+    ModalModule.forRoot()
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })

@@ -30,7 +30,8 @@ export class RegisterComponent implements OnInit {
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       dateOfBirth: ['', [Validators.required, this.checkYearOfDate()]],
-      password: ['', [Validators.required, this.testPattern()]],
+      password: ['', [Validators.required, this.testPattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/, 'pass')]],
+      email: ['', [Validators.required, this.testPattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'email')]],
       confirmPassword: ['', [Validators.required,this.matchValues('password')]]
     });
 
@@ -46,11 +47,14 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  testPattern(): ValidatorFn{
-    const regExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  testPattern(regExp, type): ValidatorFn{
+    //const regExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     return (control: AbstractControl) =>{
       const valid = regExp.test(control.value);
-      return valid ? null : { invalidPattern: true };
+      if(type === 'pass')
+        return valid ? null : { invalidPatternPass: true };
+      else
+      return valid ? null : { invalidPatternEmail: true };
     }
   }
 

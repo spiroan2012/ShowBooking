@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { AccountService } from '../_services/account.service';
 
 @Component({
@@ -13,7 +14,7 @@ export class LoginComponent implements OnInit {
   validationErrors: string[] = [];
   model
 
-  constructor(private fb: FormBuilder, private accountService: AccountService, private router: Router) { }
+  constructor(private fb: FormBuilder, private accountService: AccountService, private router: Router, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.initializeForm();
@@ -28,8 +29,15 @@ export class LoginComponent implements OnInit {
 
   login(){
     this.accountService.login(this.loginForm.value).subscribe(response =>{
+      
       //console.log("Login success");
-      this.router.navigateByUrl('/seat-booking');
+      if(response.isDisabled){
+        this.toastr.error('Ο λογαριασμός σας έχει απενεργοποιηθεί από τους διαχειριστές');
+      }
+      else{
+        this.router.navigateByUrl('/seat-booking');
+      }
+      
     }, error =>{
       console.log("There was an error "+error.error);
     });

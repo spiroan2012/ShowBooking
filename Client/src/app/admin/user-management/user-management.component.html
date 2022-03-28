@@ -1,0 +1,28 @@
+<div class="row">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Ον.χρήστη</th>
+                <th scope="col">Όνομα</th>
+                <th scope="col">Επώνυμο</th>
+                <th scope="col">Email</th>
+                <th scope="col">Ημ.γέννησης</th>
+                <th scop e="col">Ρόλοι</th>
+                <th scope="col">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of users">
+                <td>{{user.username}}</td>
+                <td>{{user.firstName}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.lastName}}</td>
+                <td>{{user.dateOfBirth}}</td>
+                <td>{{user.roles}}</td>
+                <td>{{user.isDisabled ? "Απενεργοποιημένος": "Ενεργοποιημένος"}}</td>
+                <td><button (click) = "changeUserStatus(user)" [className] ="user.isDisabled ? 'btn btn-info' : 'btn btn-danger'" >{{user.isDisabled ? "Ενεργοποίηση": "Απενεργοποίηση"}}</button></td>
+                <td><button (click) = "openRolesModal(user)" class="btn btn-info">Επεξεργασία ρόλων</button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

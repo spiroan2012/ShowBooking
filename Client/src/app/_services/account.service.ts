@@ -20,12 +20,18 @@ export class AccountService {
       map((response: any) => {
         const user = response;
 
-        if(user){
+        if(user && !user.isDisabled){
           this.setCurrentUser(user);
 
         }
+        return user;
       })
     )
+  }
+
+  logout(){
+    localStorage.removeItem('user');
+    this.currentuserSource.next(undefined);
   }
 
   register(model: any){
