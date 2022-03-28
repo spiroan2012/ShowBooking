@@ -34,6 +34,7 @@ namespace API.Controllers
 					Username = u.UserName,
 					FirstName = u.FirstName,
 					LastName = u.LastName,
+					Email = u.Email,
 					DateOfBirth = u.DateOfBirth.ToString("dd/MM/yyyy"),
 					IsDisabled = u.IsDisabled,
 					Roles = u.UserRoles.Select(r => r.Role.Name).ToList()
@@ -57,7 +58,7 @@ namespace API.Controllers
 
 			if (!result.Succeeded) return BadRequest("Δεν ήταν δυνατή η αλλαγή του στατούς του χρήστη");
 
-			return Ok(user);
+			return Ok(user.IsDisabled);
 		}
 
 		[HttpPost("edit-roles/{username}")]
