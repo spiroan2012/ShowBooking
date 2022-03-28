@@ -14,6 +14,7 @@ namespace Core.Entities
         public string Gender { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public bool IsDisabled { get; set; } = false;
         public ICollection<AppUserRole> UserRoles { get; set; }
     }
 }
