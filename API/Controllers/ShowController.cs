@@ -1,8 +1,10 @@
 ﻿using API.Dtos;
+using API.Extensions;
 using API.Helpers;
 using AutoMapper;
 using Core.Entities;
 using Core.Interfaces;
+using Core.Params;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -29,11 +31,13 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ShowDto>>> GetAllShows()
+        public async Task<ActionResult<IEnumerable<ShowDto>>> GetAllShows([FromQuery]ShowParams showParams)
         {
-            var shows = await _showRepository.GetAllShowsAsync();
+            var shows = await _showRepository.GetAllShowsAsync(showParams);
 
-            return Ok(shows);
+            Response.AddPaginationHeader(shows.CurrentPage, shows.PageSize, shows.TotalCount, shows.TotalPages);
+
+            return Ok(_mapper.Map<IEnumerable<ShowDto>>(shows));
         }
 
         [HttpGet("{id}")]
@@ -112,14 +116,6 @@ namespace API.Controllers
 
             if (await _showRepository.Complete()) return Ok();
             return BadRequest("Failed to change the hall of show "+show.Title+" to "+hall.Title);
-        }
-
-        [HttpGet("GetByDate")]
-        public async Task<ActionResult<IEnumerable<ShowDto>>> GetShowsForDate([FromQuery]DateTime dateGiven)
-        {
-            var shows = await _showRepository.GetShowsForSpecificDateAsync(dateGiven);
-
-            return Ok(_mapper.Map<List<ShowDto>>(shows));
         }
 
         [HttpGet("GetSeatsOfShow")]

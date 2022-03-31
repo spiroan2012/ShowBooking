@@ -1,6 +1,8 @@
 ﻿using API.Dtos;
+using API.Extensions;
 using AutoMapper;
 using Core.Interfaces;
+using Core.Params;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -22,9 +24,12 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers([FromQuery]UserParams userParams)
         {
-            var users = await _userRepository.GetUsersAsync();
+            var users = await _userRepository.GetUsersAsync(userParams);
+
+            Response.AddPaginationHeader(users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPages);
+
             return Ok(_mapper.Map<List<UserDto>>(users));
         }
 

@@ -1,4 +1,5 @@
 ﻿using Core.Entities;
+using Core.Params;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +12,9 @@ namespace Core.Interfaces
     {
         void Add(Show show);
         void Delete(Show show);
-        Task<IReadOnlyList<Show>> GetAllShowsAsync();
+        Task<PagedList<Show>> GetAllShowsAsync(ShowParams showParams);
         Task<Show> GetShowByIdAsync(int id);
         Task<Hall> GetHallOfShowAsync(int id);
-        Task<IReadOnlyList<Show>> GetShowsForSpecificDateAsync(DateTime date);
         Task<bool> Complete();
         void Update(Show show);
     }

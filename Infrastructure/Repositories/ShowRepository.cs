@@ -1,5 +1,6 @@
 ﻿using Core.Entities;
 using Core.Interfaces;
+using Core.Params;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -29,9 +30,22 @@ namespace Infrastructure.Repositories
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public async Task<IReadOnlyList<Show>> GetAllShowsAsync()
+        public async Task<PagedList<Show>> GetAllShowsAsync(ShowParams showParams)
         {
-            return await _context.Shows.ToListAsync();
+            var query = _context.Shows.Include(s => s.Hall).AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(showParams.SearchTitle))
+            {
+                query = query.Where(s => s.Title.Contains(showParams.SearchTitle));
+            }
+            query = query.Where(s => s.DateStart <= showParams.SearchDate && s.DateEnd >= showParams.SearchDate);
+
+            query = showParams.OrderBy switch
+            {
+                "title" => query.OrderByDescending(s => s.Title),
+                _ => query.OrderByDescending(s => s.TimeStart)
+            };
+            return await PagedList<Show>.CreateAsync(query, showParams.PageNumber, showParams.PageSize);
         }
 
         public async Task<Hall> GetHallOfShowAsync(int id)

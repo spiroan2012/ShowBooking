@@ -1,5 +1,6 @@
 ﻿using Core.Entities;
 using Core.Interfaces;
+using Core.Params;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -31,10 +32,22 @@ namespace Infrastructure.Repositories
             return user;
         }
 
-        public async Task<IEnumerable<AppUser>> GetUsersAsync()
+        public async Task<PagedList<AppUser>> GetUsersAsync(UserParams userParams )
         {
-            return await _context.Users
-                .ToListAsync();
+            var query = _context.Users.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(userParams.SearchUsername))
+            {
+                query = query.Where(x => x.UserName.Contains(userParams.SearchUsername));
+            }
+
+            query = userParams.OrderBy switch
+            {
+                "username" => query.OrderByDescending(s => s.UserName),
+                _ => query.OrderByDescending(s => s.CreationDate)
+            };
+
+            return await PagedList<AppUser>.CreateAsync(query, userParams.PageNumber, userParams.PageSize);
         }
 
         public void Update(AppUser user)

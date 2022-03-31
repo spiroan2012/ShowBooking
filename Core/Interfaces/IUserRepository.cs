@@ -1,4 +1,5 @@
 ﻿using Core.Entities;
+using Core.Params;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace Core.Interfaces
     public interface IUserRepository
     {
         void Update(AppUser user);
-        Task<IEnumerable<AppUser>> GetUsersAsync();
+        Task<PagedList<AppUser>> GetUsersAsync(UserParams userParams);
         Task<AppUser> GetUserByIdAsync(int id);
         Task<AppUser> GetUserByUsernameAsync(string username);
     }

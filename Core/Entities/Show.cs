@@ -19,6 +19,10 @@ namespace Core.Entities
         [MaxLength(600)]
         public string Description { get; init; }
         [Required]
+        public string Actors { get; set; }
+        [Required]
+        public string Directors { get; set; }
+        [Required]
         [Column(TypeName = "date")]
         public DateTime DateStart { get; set; }
         [Required]

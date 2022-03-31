@@ -1,8 +1,9 @@
 ﻿using API.Dtos;
+using API.Extensions;
 using AutoMapper;
 using Core.Entities;
 using Core.Interfaces;
-using Microsoft.AspNetCore.Http;
+using Core.Params;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -23,11 +24,13 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<HallDto>>> GetHalls()
+        public async Task<ActionResult<IEnumerable<HallDto>>> GetHalls([FromQuery]HallParams hallParams)
         {
-            var halls = await _hallsRepository.GetAllHallsAsync();
+            var halls = await _hallsRepository.GetAllHallsAsync(hallParams);
 
-            return Ok(halls);
+            Response.AddPaginationHeader(halls.CurrentPage, halls.PageSize, halls.TotalCount, halls.TotalPages);
+
+            return Ok(_mapper.Map<IEnumerable<HallDto>>(halls));
         }
 
         [HttpGet("{id}")]
@@ -41,11 +44,13 @@ namespace API.Controllers
         }
 
         [HttpGet("GetShowsOfHall/{id}")]
-        public async Task<ActionResult<IEnumerable<ShowDto>>> GetShowsOfHall(int id)
+        public async Task<ActionResult<IEnumerable<ShowDto>>> GetShowsOfHall(int id, [FromQuery]HallParams hallParams)
         {
-            var shows = await _hallsRepository.GetShowsOfHallAsync(id);
+            var shows = await _hallsRepository.GetShowsOfHallAsync(id, hallParams);
 
             if (shows == null) return NotFound("We could not found any show for hall " + id);
+
+            Response.AddPaginationHeader(shows.CurrentPage, shows.PageSize, shows.TotalCount, shows.TotalPages);
 
             return Ok(_mapper.Map<IEnumerable<ShowDto>>(shows));
         }

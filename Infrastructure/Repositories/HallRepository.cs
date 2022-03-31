@@ -1,5 +1,6 @@
 ﻿using Core.Entities;
 using Core.Interfaces;
+using Core.Params;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -24,9 +25,29 @@ namespace Infrastructure.Repositories
             _context.Halls.Add(hall);
         }
 
-        public async Task<IReadOnlyList<Hall>> GetAllHallsAsync()
+        public async Task<PagedList<Hall>> GetAllHallsAsync(HallParams hallParams)
         {
-            return await _context.Halls.ToListAsync();
+            var query = _context.Halls
+                .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(hallParams.SearchTitle))
+            {
+                query = query.Where(h => h.Title.Contains(hallParams.SearchTitle));
+            }
+
+            if(hallParams.MaxCapacity > 0)
+            {
+                query = query.Where(h => h.Capacity <= hallParams.MaxCapacity);
+            }
+            query = query .Where(h => h.Capacity >= hallParams.MinCapacity);
+
+            query = hallParams.OrderBy switch
+            {
+                "title" => query.OrderByDescending(s => s.Title),
+                _ => query.OrderByDescending(s => s.Capacity)
+            };
+
+            return await PagedList<Hall>.CreateAsync(query, hallParams.PageNumber, hallParams.PageSize);
         }
 
         public async Task<Hall> GetHallByIdAsync(int id)
@@ -51,12 +72,15 @@ namespace Infrastructure.Repositories
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public async Task<IReadOnlyList<Show>> GetShowsOfHallAsync(int id)
+        public async Task<PagedList<Show>> GetShowsOfHallAsync(int id, HallParams hallParams)
         {
             var hall = await _context.Halls
                 .Include(p => p.Shows)
                 .SingleOrDefaultAsync(p => p.Id == id);
-            return hall?.Shows.ToList();
+
+            var query = hall?.Shows.AsQueryable();
+
+            return await PagedList<Show>.CreateAsync(query, hallParams.PageNumber, hallParams.PageSize);
         }
     }
 }

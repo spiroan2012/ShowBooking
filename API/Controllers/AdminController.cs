@@ -36,6 +36,7 @@ namespace API.Controllers
 					LastName = u.LastName,
 					Email = u.Email,
 					DateOfBirth = u.DateOfBirth.ToString("dd/MM/yyyy"),
+					CreationDate = u.CreationDate.ToString("dd/MM/yyyy HH:mm:ss"),
 					IsDisabled = u.IsDisabled,
 					Roles = u.UserRoles.Select(r => r.Role.Name).ToList()
 				})
