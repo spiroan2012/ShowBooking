@@ -1,4 +1,6 @@
-﻿using Core.Entities;
+﻿using API.Extensions;
+using Core.Entities;
+using Core.Params;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -22,27 +24,42 @@ namespace API.Controllers
 
 		[Authorize(Policy = "RequireAdminRole")]
 		[HttpGet("users-with-roles")]
-		public async Task<ActionResult> GetUsersWithRoles()
+		public async Task<ActionResult> GetUsersWithRoles([FromQuery]UserParams userParams)
 		{
-			var users = await _userManager.Users.Include(r => r.UserRoles)
+			var query = _userManager.Users.Include(r => r.UserRoles)
 				.ThenInclude(r => r.Role)
 				.OrderBy(u => u.UserName)
 				.Where(u => u.UserName != "admin")
-				.Select(u => new
-				{
-					u.Id,
-					Username = u.UserName,
-					FirstName = u.FirstName,
-					LastName = u.LastName,
-					Email = u.Email,
-					DateOfBirth = u.DateOfBirth.ToString("dd/MM/yyyy"),
-					CreationDate = u.CreationDate.ToString("dd/MM/yyyy HH:mm:ss"),
-					IsDisabled = u.IsDisabled,
-					Roles = u.UserRoles.Select(r => r.Role.Name).ToList()
-				})
-				.ToListAsync();
+				.AsQueryable();
 
-			return Ok(users);
+			if (!string.IsNullOrWhiteSpace(userParams.SearchUsername))
+			{
+				query = query.Where(x => x.UserName.Contains(userParams.SearchUsername));
+			}
+
+			query = userParams.OrderBy switch
+			{
+				"username" => query.OrderByDescending(s => s.UserName),
+				_ => query.OrderByDescending(s => s.CreationDate)
+			};
+
+			var users = await PagedList<AppUser>.CreateAsync(query, userParams.PageNumber, userParams.PageSize);
+
+			Response.AddPaginationHeader(users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPages);
+
+			var newData = users.Select(u => new
+			{
+				u.Id,
+				Username = u.UserName,
+				FirstName = u.FirstName,
+				LastName = u.LastName,
+				Email = u.Email,
+				DateOfBirth = u.DateOfBirth.ToString("dd/MM/yyyy"),
+				CreationDate = u.CreationDate.ToString("dd/MM/yyyy HH:mm:ss"),
+				IsDisabled = u.IsDisabled,
+				Roles = u.UserRoles.Select(r => r.Role.Name).ToList()
+			});
+			return Ok(newData.ToList());
 		}
 
 		[Authorize(Policy = "RequireAdminRole")]
