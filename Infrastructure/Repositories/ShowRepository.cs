@@ -38,12 +38,12 @@ namespace Infrastructure.Repositories
             {
                 query = query.Where(s => s.Title.Contains(showParams.SearchTitle));
             }
-            query = query.Where(s => s.DateStart <= showParams.SearchDate && s.DateEnd >= showParams.SearchDate);
+            query = query.Where(s =>  s.DateEnd >= DateTime.Now);
 
             query = showParams.OrderBy switch
             {
                 "title" => query.OrderByDescending(s => s.Title),
-                _ => query.OrderByDescending(s => s.TimeStart)
+                _ => query.OrderByDescending(s => s.DateStart)
             };
             return await PagedList<Show>.CreateAsync(query, showParams.PageNumber, showParams.PageSize);
         }

@@ -4,6 +4,8 @@ import { AdminService } from 'src/app/_services/admin.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { RolesModalComponent } from 'src/app/modals/roles-modal/roles-modal.component';
 import { ToastrService } from 'ngx-toastr';
+import { UserParams } from 'src/app/_models/urerParams';
+import { Pagination } from 'src/app/_models/pagination';
 
 @Component({
   selector: 'app-user-management',
@@ -12,18 +14,28 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class UserManagementComponent implements OnInit {
   users: Partial<User[]>;
+  pagination: Pagination;
+  userParams: UserParams;
   bsModalref: BsModalRef;
   
-  constructor(private adminService: AdminService, private modalService: BsModalService,private toastr: ToastrService) { }
+  constructor(private adminService: AdminService, private modalService: BsModalService,private toastr: ToastrService) {
+    this.userParams = this.adminService.getUserParams();
+   }
 
   ngOnInit(): void {
     this.getUsersWithRoles();
   }
 
+  resetFilters(){
+    this.userParams = this.adminService.resetUserParams();
+  }
+
   getUsersWithRoles(){
-    this.adminService.getUserWithRoles().subscribe(users => {
-      console.log(users);
-      this.users = users;
+    this.adminService.setUserParams(this.userParams);
+    this.adminService.getUserWithRoles(this.userParams).subscribe(response => {
+      //console.log(users);
+      this.users = response.result;
+      this.pagination = response.pagination;
     })
   }
 
@@ -57,6 +69,7 @@ export class UserManagementComponent implements OnInit {
   private getRolesArray(user: User){
     const roles = [];
     const userRoles = user.roles;
+    userParams: UserParams;
 
     const availableRoles: any[] = [
      // {name: 'Admin', value: 'Admin'},

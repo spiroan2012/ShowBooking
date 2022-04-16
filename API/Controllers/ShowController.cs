@@ -31,7 +31,7 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ShowDto>>> GetAllShows([FromQuery]ShowParams showParams)
+        public async Task<ActionResult<IEnumerable<ShowDto>>> GetShows([FromQuery]ShowParams showParams)
         {
             var shows = await _showRepository.GetAllShowsAsync(showParams);
 

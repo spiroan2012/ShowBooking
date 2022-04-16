@@ -13,7 +13,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ErrorInterceptor } from './_interceptors/error.interceptor';
 import { BookingCalendarComponent } from './booking-calendar/booking-calendar.component';
-import { SeatBookingComponent } from './seat-booking/seat-booking.component';
+//import { SeatBookingComponent } from './seat-booking/seat-booking.component';
 import { TicketManagementComponent } from './ticket-management/ticket-management.component';
 import { EntranceRegisterComponent } from './entrance-register/entrance-register.component';
 import { HasRoleDirective } from './_directives/has-role.directive';
@@ -27,6 +27,10 @@ import { JwtInterceptor } from './_interceptors/jwt.interceptor';
 import { ConfirmDialogComponent } from './modals/confirm-dialog/confirm-dialog.component';
 import { RolesModalComponent } from './modals/roles-modal/roles-modal.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
+//import { ShowsBookingListComponent } from './seat-booking/shows-booking-list/shows-booking-list.component';
+import {PaginationModule} from 'ngx-bootstrap/pagination';
+import { ShowBookingListComponent } from './shows/show-booking-list/show-booking-list.component';
+import { ShowBookingCardComponent } from './shows/show-booking-card/show-booking-card.component'
 
 @NgModule({
   declarations: [
@@ -36,7 +40,6 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     LoginComponent,
     HomeComponent,
     BookingCalendarComponent,
-    SeatBookingComponent,
     TicketManagementComponent,
     EntranceRegisterComponent,
     HasRoleDirective,
@@ -45,7 +48,9 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     AdminPanelComponent,
     UserManagementComponent,
     ConfirmDialogComponent,
-    RolesModalComponent
+    RolesModalComponent,
+    ShowBookingListComponent,
+    ShowBookingCardComponent
   ],
   imports: [
     BrowserModule,
@@ -60,7 +65,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     BsDropdownModule.forRoot(),
     BsDatepickerModule.forRoot(),
     TabsModule.forRoot(),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    PaginationModule.forRoot()
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},

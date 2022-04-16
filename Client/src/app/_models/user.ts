@@ -4,6 +4,8 @@ export interface User{
     lastName: string;
     dateOfBirth: Date;
     token: string;
+    email: string;
+    creationDate: Date;
     isDisabled: boolean;
     roles: string[];
 }
