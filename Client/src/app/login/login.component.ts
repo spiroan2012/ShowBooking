@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
         this.toastr.error('Ο λογαριασμός σας έχει απενεργοποιηθεί από τους διαχειριστές');
       }
       else{
-        this.router.navigateByUrl('/seat-booking');
+        this.router.navigateByUrl('/show-booking');
       }
       
     }, error =>{

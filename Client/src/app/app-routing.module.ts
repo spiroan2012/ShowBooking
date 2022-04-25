@@ -9,7 +9,9 @@ import { TicketManagementComponent } from './ticket-management/ticket-management
 import { AdminAuthGuard } from './_guards/admin-auth.guard';
 import { ModeratorAuthGuard } from './_guards/moderator-auth.guard';
 import { UserAuthGuard } from './_guards/user-auth.guard';
-import { ShowBookingListComponent } from './shows/show-booking-list/show-booking-list.component';
+import { ShowBookingListComponent } from './show-booking/show-booking-list/show-booking-list.component';
+import { ShowBookingDetailsComponent } from './show-booking/show-booking-details/show-booking-details.component';
+import { ShowDetailResolver } from './_resolvers/show-detail.resolver';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -18,7 +20,8 @@ const routes: Routes = [
     children: [
       {path: 'login', component: LoginComponent},
       {path: 'booking-calendar',component: BookingCalendarComponent, canActivate: [ModeratorAuthGuard]},
-      {path: 'seat-booking', component: ShowBookingListComponent, canActivate: [UserAuthGuard]},
+      {path: 'show-booking', component: ShowBookingListComponent, canActivate: [UserAuthGuard]},
+      {path: 'show-booking/:id', component: ShowBookingDetailsComponent, resolve:{show: ShowDetailResolver}},
       {path: 'ticket-management', component: TicketManagementComponent, canActivate: [ModeratorAuthGuard]},
       {path: 'admin-panel', component: AdminPanelComponent, canActivate: [AdminAuthGuard]},
       {path: 'entrance-register', component: EntranceRegisterComponent, canActivate: [UserAuthGuard]}

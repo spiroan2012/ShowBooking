@@ -5,6 +5,12 @@ export interface Show{
     dateStart: Date;
     dateEnd: Date;
     actors: string[];
+    directors: string[];
     duration: number;
+    timeStart: Date;
     hallName: string;
+    hallAdress: string;
+    hallPhone: string;
+    hallEmail: string;
+    hallDescription: string;
 }

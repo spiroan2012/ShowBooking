@@ -1,0 +1,73 @@
+<!-- <ngx-gallery *ngIf="galleryImages" [options]="galleryOptions" [images]="galleryImages"></ngx-gallery> -->
+<div class="row" *ngIf="show">
+    <div class="col-4">
+        <div class="card">
+            <img src="{{'./assets/user.png'}}" class="card-img-top img-thumbnail">
+        </div>
+        <div class="card-body">
+            <div>
+                <strong>Τίτλος: </strong>
+                <p>{{show.title}}</p>
+            </div>
+            <div>
+                <strong>Ημερομηνία από: </strong>
+                <p>{{show.dateStart | date: 'dd MMM yyyy'}}</p>
+            </div>
+            <div>
+                <strong>Ημερομηνία έως: </strong>
+                <p>{{show.dateEnd | date: 'dd MMM yyyy'}}</p>
+            </div>
+            <div>
+                <strong>Ώρα: </strong>
+                <p>{{show.timeStart | date: 'h:mm a'}}</p>
+            </div>
+            <div>
+                <strong>Διάρκεια: </strong>
+                <p>{{show.duration}} λεπτά</p>
+            </div>
+            <div>
+                <strong>Θέατρο: </strong>
+                <p>{{show.hallName}}</p>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="btn-group d-flex">
+                <button class="btn btn-success" (click) ="selectTab(1)">Κράτηση</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-8">
+        <tabset class="show-tabset" #showTabs>
+            <tab heading= 'Πληροφορίες παράστασης {{show.title}}' (selectTab) ="onTabActivated($event)">
+                <h4>Περιγραφή</h4>
+                <p>{{show.description}}</p>
+                <h4>Πρωταγωνιστές</h4>
+                <p>{{show.actors}}</p>
+                <h4>Σκηνοθεσία</h4>
+                <p>{{show.directors}}</p>
+                <hr>
+                <h4>Περιγραφή θεάτρου {{show.hallName}}</h4>
+                <p>{{show.hallDescription}}</p>
+                <h4>Διεύθυνση</h4>
+                <p>{{show.hallAddress}}</p>
+                <h4>Τηλέφωνο</h4>
+                <p>{{show.hallPhone}}</p>
+                <h4>email</h4>
+                <p>{{show.hallEmail}}</p>
+            </tab>
+            <tab heading= 'Κρατηση' (selectTab) ="onTabActivated($event)">
+                <!-- <h4>Εδώ θα μπουν οι κρατήσεις</h4> -->
+                <app-show-booking-reserve [show] = "show"></app-show-booking-reserve>
+            </tab>
+            <!-- <tab heading= 'Interests' (selectTab) ="onTabActivated($event)">
+                <p>{{member.interests}}</p>
+            </tab>
+            <tab heading= 'Photos' (selectTab) ="onTabActivated($event)">
+                <ngx-gallery [options]="galleryOptions" [images]="galleryImages" style="display: inline-block; margin-bottom: 20px;"></ngx-gallery>
+            </tab>
+            <tab heading= 'Messages' (selectTab) ="onTabActivated($event)">
+                <app-member-messages [username] = "member.username"></app-member-messages>
+            </tab> -->
+        </tabset>
+    </div>
+</div>

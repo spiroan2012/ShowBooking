@@ -8,7 +8,9 @@
         bsDatepicker
         [bsConfig]  = 'bsConfig'
         [maxDate] = 'maxDate'
+        [minDate]= 'minDate'
     >
     <div *ngIf="ngControl.control?.errors?.required" class="invalid-feedback">Παρακαλώ εισάγετε μια Ημερομηνία</div>
     <div *ngIf="ngControl.control?.errors?.hasAgeRestrict" class="invalid-feedback">Δεν επιτρέπεται η δημιουργία λογαριασμού σε άτομα κάτω των 13 ετών</div>
+    <div *ngIf="ngControl.control?.errors?.invalidDate" class="invalid-feedback">Δεν διεξάγεται παράσταση για την Ημερομηνία που επιλέξατε</div>
 </div>

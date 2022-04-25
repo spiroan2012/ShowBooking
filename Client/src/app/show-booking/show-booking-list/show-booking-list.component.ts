@@ -11,7 +11,7 @@ import { ShowsService } from 'src/app/_services/shows.service';
   styleUrls: ['./show-booking-list.component.css']
 })
 export class ShowBookingListComponent implements OnInit {
-  shows: Show[];
+  shows: Show[] = [];
   pagination: Pagination;
   showParams: ShowParams;
   user: User;

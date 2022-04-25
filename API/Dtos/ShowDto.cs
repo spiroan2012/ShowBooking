@@ -14,6 +14,10 @@ namespace API.Dtos
         public string[] Directors { get; set; }
         public int Duration { get; init; }
         public string HallName { get; set; }
+        public string HallDescription { get; set; }
+        public string HallAddress { get; set; }
+        public string HallPhone { get; set; }
+        public string HallEmail { get; set; }
 
     }
 }

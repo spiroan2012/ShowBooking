@@ -58,6 +58,7 @@ namespace Infrastructure.Repositories
         public async Task<Show> GetShowByIdAsync(int id)
         {
             return await _context.Shows
+                .Include(s => s.Hall)
                 .SingleOrDefaultAsync(p => p.Id == id);
         }
 

@@ -1,9 +1,11 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Show } from '../_models/show';
 import { ShowParams } from '../_models/showParams';
+import { ShowSeat } from '../_models/showSeat';
 import { User } from '../_models/user';
 import { AccountService } from './account.service';
 import { getPaginatedResult, getPaginationHeaders } from './paginationHelper';
@@ -44,5 +46,18 @@ export class ShowsService {
       .pipe(map(response =>{
         return response;
       }))
+   }
+
+   getShow(showId: number){
+     return this.http.get<Show>(this.baseUrl+'show/'+showId);
+   }
+
+   getSeatsOfShow(model: any): Observable<ShowSeat[]>{
+    let params = new HttpParams();
+    let myDate = new Date(model.showDate);
+    var dar = myDate.getDate()+'/'+(myDate.getMonth()+1)+'/'+myDate.getFullYear()
+    params = params.append('showId', model.showId.toString());
+    params = params.append('showDate', dar);
+    return this.http.get<ShowSeat[]>(this.baseUrl+'show/GetSeatsOfShow', {params:params})
    }
 }
