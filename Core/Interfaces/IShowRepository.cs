@@ -17,5 +17,6 @@ namespace Core.Interfaces
         Task<Hall> GetHallOfShowAsync(int id);
         Task<bool> Complete();
         void Update(Show show);
+        Task<IReadOnlyList<Show>> GetShowsForSpecificDateAsync(DateTime dateGiven);
     }
 }

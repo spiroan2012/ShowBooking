@@ -75,6 +75,7 @@ namespace Infrastructure.Repositories
         public async Task<IReadOnlyList<Show>> GetShowsForSpecificDateAsync(DateTime dateGiven)
         {
             return await _context.Shows
+                .Include(s => s.Hall)
                 .Where(p => dateGiven >= p.DateStart && dateGiven <= p.DateEnd )
                 .ToListAsync();
         }

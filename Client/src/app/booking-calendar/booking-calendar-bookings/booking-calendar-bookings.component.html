@@ -1,0 +1,36 @@
+<div *ngIf="bookings.length > 0">
+    <div class="text-center mt-3">
+        <h2>Βρέθηκαν {{bookings.length}} κρατήσεις για την παράσταση</h2>
+    </div>
+    <div class="row">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Α/Α</th>
+                    <th scope="col">Όνομα</th>
+                    <th scope="col">Επώνυμο</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Ημ.κράτησης</th>
+                    <th scope="col">Αριθμός θέσεων</th>
+                    <th scope="col">Εμφανίστηκε</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let booking of bookings; index as i">
+                    <td>{{i}}</td>
+                    <td>{{booking.user.firstName}}</td>
+                    <td>{{booking.user.lastName}}</td>
+                    <td>{{booking.user.email}}</td>
+                    <td>{{booking.bookingTimestamp | date: 'dd MMM yyyy h:mm a'}}</td>
+                    <td>{{booking.numOfSeats}}</td>
+                    <td>{{booking.appeared ? "NAI" : "OXI"}}</td>
+                    <td><button class="btn btn-info" (click)="openSeatsModal(i)">Θέσεις</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <hr>
+    <h6>Από τις {{show.hallCapacity}} θέσεις της αίθουσας έχουν κλειστεί οι {{totalSeats}} (το {{percentOfBooked}}% των συνολικών θέσεων)</h6>
+    <h6>Από τον παραπάνω αριθμό εμφανίστικαν οι {{totalAppeared}} (το {{percentOfAppeared}}% των συνολικών κρατήσεων)</h6>
+</div>
+<h6 *ngIf="bookings.length == 0">Δεν βρέθηκαν κρατήσεις για την παράσταση</h6>

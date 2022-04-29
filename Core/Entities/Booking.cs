@@ -22,5 +22,6 @@ namespace Core.Entities
         [Required]
         public int NumOfSeats { get; init; } = 50;
         public bool Appeared { get; set; }
+        public ICollection<Seat> Seats { get; set; }
     }
 }

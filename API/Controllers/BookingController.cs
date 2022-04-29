@@ -87,5 +87,13 @@ namespace API.Controllers
             var bookings = await _bookingRepository.GetBookingsForUserAync(user);
             return Ok(_mapper.Map<List<BookingDto>>(bookings));
         }
+
+        [HttpGet("GetBookingsForShowAndDate")]
+        public async Task<ActionResult<IEnumerable<BookingDto>>> GetBookingsForShowAndDate([FromQuery] int showId, [FromQuery] DateTime date)
+        {
+            var bookings = await _bookingRepository.GetBookingsForShowAndDate(showId, date);
+
+            return Ok(_mapper.Map<List<BookingDto>>(bookings));
+        }
     }
 }

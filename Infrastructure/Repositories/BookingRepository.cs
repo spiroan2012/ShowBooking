@@ -66,5 +66,14 @@ namespace Infrastructure.Repositories
                 .ToListAsync();
             return data;
         }
+
+        public async Task<IEnumerable<Booking>> GetBookingsForShowAndDate(int showId, DateTime dateGiven)
+        {
+            return await _context.Bookings
+                .Where(b => b.DateOfShow == dateGiven && b.Show.Id == showId)
+                .Include(b => b.Seats)
+                .Include(b =>b.User)
+                .ToListAsync();
+        }
     }
 }

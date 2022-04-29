@@ -55,9 +55,17 @@ export class ShowsService {
    getSeatsOfShow(model: any): Observable<ShowSeat[]>{
     let params = new HttpParams();
     let myDate = new Date(model.showDate);
-    var dar = myDate.getDate()+'/'+(myDate.getMonth()+1)+'/'+myDate.getFullYear()
+    var dar = myDate.getDate()+'/'+(myDate.getMonth()+1)+'/'+myDate.getFullYear();
     params = params.append('showId', model.showId.toString());
     params = params.append('showDate', dar);
     return this.http.get<ShowSeat[]>(this.baseUrl+'show/GetSeatsOfShow', {params:params})
+   }
+
+   getShowsForDate(dateOfShow: any){
+     let params = new HttpParams();
+     let givenDate = new Date(dateOfShow);
+     var datePassed = givenDate.getFullYear()+'-'+(givenDate.getMonth()+1)+'-'+givenDate.getDate();
+     params = params.append('dateGiven', datePassed);
+     return this.http.get<Show[]>(this.baseUrl+'show/GetShowsForDate', {params: params});
    }
 }

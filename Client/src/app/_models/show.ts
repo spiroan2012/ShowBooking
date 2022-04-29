@@ -9,8 +9,9 @@ export interface Show{
     duration: number;
     timeStart: Date;
     hallName: string;
-    hallAdress: string;
+    hallAddress: string;
     hallPhone: string;
     hallEmail: string;
     hallDescription: string;
+    hallCapacity: number;
 }

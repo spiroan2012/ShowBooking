@@ -127,5 +127,13 @@ namespace API.Controllers
 
             return BookingUtilityClass.CreateArrayOfSeats(reservedSeats, hall.Capacity);
         }
+
+        [HttpGet("GetShowsForDate")]
+        public async Task<ActionResult<IEnumerable<ShowDto>>> GetShowsForDate([FromQuery] DateTime dateGiven)
+        {
+            var shows = await _showRepository.GetShowsForSpecificDateAsync(dateGiven);
+
+            return Ok(_mapper.Map<IEnumerable<ShowDto>>(shows));
+        }
     }
 }

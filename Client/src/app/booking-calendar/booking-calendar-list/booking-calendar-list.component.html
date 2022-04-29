@@ -1,0 +1,42 @@
+<div class="container mt-3">
+    <form [formGroup] = "dateSearchForm" (ngSubmit) = "dateSearchForm.valid"  autocomplete="off">
+        <app-date-input 
+            [formControl] = 'dateSearchForm.controls["dateOfShow"]' 
+            [label] = "'Ημερομηνία'" 
+            [minDate] ="minDate" 
+            [maxDate] = "maxDate"
+            >
+          </app-date-input>
+        <div class="form-group text-center">
+            <button class="btn btn-success mr-2" type="submit" (click)="getShowsForDate()">Αναζήτηση</button>
+        </div>
+      </form> 
+</div>
+<div *ngIf="showsForDate.length > 0">
+    <div class="row">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Κωδικός</th>
+                    <th scope="col">Όν.παράστασης</th>
+                    <th scope="col">Θέατρο</th>
+                    <th scope="col">Τηλ.θεάτρου</th>
+                    <th scope="col">Διεύ.θεάτρου</th>
+                    <th scope="col">Ώρ.παράστασης</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let show of showsForDate">
+                    <td>{{show.id}}</td>
+                    <td>{{show.title}}</td>
+                    <td>{{show.hallName}}</td>
+                    <td>{{show.hallPhone}}</td>
+                    <td>{{show.hallAddress}}</td>
+                    <td>{{show.timeStart | date: 'h:mm a'}}</td>
+                    <td><button class="btn btn-info" (click)="navigateToShowDetails(show.id)">Λεπτομέρειες</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<h6 *ngIf="showsForDate.length == 0">Δεν βρέθηκαν παραστάσεις με για την ημερομηνία {{searchDate | date: 'dd MMM yyyy'}}</h6>

@@ -10,5 +10,6 @@ namespace API.Dtos
         public UserDto User { get; set; }
         public int NumOfSeats { get; init; }
         public bool Appeared { get; set; }
+        public string[] Seats { get; set; }
     }
 }

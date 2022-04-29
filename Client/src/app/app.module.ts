@@ -12,7 +12,6 @@ import { HomeComponent } from './home/home.component';
 import { ToastrModule } from 'ngx-toastr';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ErrorInterceptor } from './_interceptors/error.interceptor';
-import { BookingCalendarComponent } from './booking-calendar/booking-calendar.component';
 import { TicketManagementComponent } from './ticket-management/ticket-management.component';
 import { EntranceRegisterComponent } from './entrance-register/entrance-register.component';
 import { HasRoleDirective } from './_directives/has-role.directive';
@@ -34,6 +33,10 @@ import { NgxGalleryModule } from '@kolkov/ngx-gallery';
 import localeGr from '@angular/common/locales/el';
 import { registerLocaleData } from '@angular/common';
 import { ShowBookingReserveComponent } from './show-booking/show-booking-reserve/show-booking-reserve.component';
+import { BookingCalendarListComponent } from './booking-calendar/booking-calendar-list/booking-calendar-list.component';
+import { BookingCalendarDetailComponent } from './booking-calendar/booking-calendar-detail/booking-calendar-detail.component';
+import { BookingCalendarBookingsComponent } from './booking-calendar/booking-calendar-bookings/booking-calendar-bookings.component';
+import { InfoDialogComponent } from './modals/info-dialog/info-dialog.component';
 registerLocaleData(localeGr);
 
 @NgModule({
@@ -43,7 +46,6 @@ registerLocaleData(localeGr);
     NavComponent,
     LoginComponent,
     HomeComponent,
-    BookingCalendarComponent,
     TicketManagementComponent,
     EntranceRegisterComponent,
     HasRoleDirective,
@@ -56,7 +58,11 @@ registerLocaleData(localeGr);
     ShowBookingListComponent,
     ShowBookingCardComponent,
     ShowBookingDetailsComponent,
-    ShowBookingReserveComponent
+    ShowBookingReserveComponent,
+    BookingCalendarListComponent,
+    BookingCalendarDetailComponent,
+    BookingCalendarBookingsComponent,
+    InfoDialogComponent
   ],
   imports: [
     BrowserModule,

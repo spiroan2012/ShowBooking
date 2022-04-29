@@ -18,6 +18,7 @@ namespace API.Dtos
         public string HallAddress { get; set; }
         public string HallPhone { get; set; }
         public string HallEmail { get; set; }
+        public int HallCapacity { get; set; }
 
     }
 }
