@@ -55,6 +55,14 @@ namespace API.Controllers
             return Ok(_mapper.Map<IEnumerable<ShowDto>>(shows));
         }
 
+        [HttpGet("GetWithoutPagination")]
+        public async Task<ActionResult<IEnumerable<HallDto>>> GetWithoutPagination()
+        {
+            var halls = await _hallsRepository.GetHallsWithoutPaginationAsync();
+
+            return Ok(_mapper.Map<IEnumerable<HallDto>>(halls));
+        }
+
         [HttpPost("add")]
         public async Task<ActionResult> AddHall(HallDto hallDto)
         {

@@ -13,6 +13,7 @@ namespace Core.Interfaces
         Task<Hall> GetHallByIdAsync(int id);
         Task<PagedList<Hall>> GetAllHallsAsync(HallParams hallParams);
         Task<PagedList<Show>> GetShowsOfHallAsync(int id, HallParams hallParams);
+        Task<IReadOnlyList<Hall>> GetHallsWithoutPaginationAsync();
         void Add(Hall hall);
         void AddShow(Hall hall, Show show);
         Task<bool> Complete();

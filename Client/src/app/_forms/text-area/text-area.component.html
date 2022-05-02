@@ -1,0 +1,12 @@
+<div class="form-group">
+    <textarea
+        [class.is-invalid] = "ngControl.touched && ngControl.invalid"
+        class="form-control" 
+        [formControl] = "ngControl.control" 
+        placeholder={{label}}
+        maxlength="600"
+        style="margin-top: 5px; margin-bottom: 25px;"
+    >
+    </textarea>
+    <div *ngIf = "ngControl.control?.errors?.required" class="invalid-feedback">Παρακαλώ εισάγετε μια Περιγραφή</div>
+</div>

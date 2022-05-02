@@ -1,9 +1,10 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import { first, map, take } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Show } from '../_models/show';
+import { ShowCreate } from '../_models/showCreate';
 import { ShowParams } from '../_models/showParams';
 import { ShowSeat } from '../_models/showSeat';
 import { User } from '../_models/user';
@@ -67,5 +68,27 @@ export class ShowsService {
      var datePassed = givenDate.getFullYear()+'-'+(givenDate.getMonth()+1)+'-'+givenDate.getDate();
      params = params.append('dateGiven', datePassed);
      return this.http.get<Show[]>(this.baseUrl+'show/GetShowsForDate', {params: params});
+   }
+
+   addShow(model: any){
+      const httpOptions = {
+        headers: new HttpHeaders({'Content-Type': 'application/json'})
+      }
+      return this.http.post<ShowCreate>(this.baseUrl+'show/add', model, httpOptions);
+   }
+
+   updateShow(model: any, showId: string){
+    const httpOptions = {
+      headers: new HttpHeaders({'Content-Type': 'application/json'})
+    }
+    return this.http.put<ShowCreate>(this.baseUrl+'show/'+showId, model, httpOptions);
+   }
+
+   deleteShow(showId: number){
+     return this.http.delete(this.baseUrl+'show/'+showId);
+   }
+
+   getShowById(id: string){
+     return this.http.get<Show>(this.baseUrl+'show/'+id).pipe(first());
    }
 }

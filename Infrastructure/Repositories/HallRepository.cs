@@ -82,5 +82,11 @@ namespace Infrastructure.Repositories
 
             return await PagedList<Show>.CreateAsync(query, hallParams.PageNumber, hallParams.PageSize);
         }
+
+        public async Task<IReadOnlyList<Hall>> GetHallsWithoutPaginationAsync()
+        {
+            return await _context.Halls
+                .ToListAsync();
+        }
     }
 }

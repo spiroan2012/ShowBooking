@@ -12,7 +12,6 @@ import { HomeComponent } from './home/home.component';
 import { ToastrModule } from 'ngx-toastr';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ErrorInterceptor } from './_interceptors/error.interceptor';
-import { TicketManagementComponent } from './ticket-management/ticket-management.component';
 import { EntranceRegisterComponent } from './entrance-register/entrance-register.component';
 import { HasRoleDirective } from './_directives/has-role.directive';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
@@ -37,6 +36,13 @@ import { BookingCalendarListComponent } from './booking-calendar/booking-calenda
 import { BookingCalendarDetailComponent } from './booking-calendar/booking-calendar-detail/booking-calendar-detail.component';
 import { BookingCalendarBookingsComponent } from './booking-calendar/booking-calendar-bookings/booking-calendar-bookings.component';
 import { InfoDialogComponent } from './modals/info-dialog/info-dialog.component';
+import { ShowManagementIndexComponent } from './show-management/show-management-index/show-management-index.component';
+import { ShowManagementViewComponent } from './show-management/show-management-view/show-management-view.component';
+import { ShowManagementAddComponent } from './show-management/show-management-add/show-management-add.component';
+import { TextAreaComponent } from './_forms/text-area/text-area.component';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { NgSelectModule } from '@ng-select/ng-select';
+
 registerLocaleData(localeGr);
 
 @NgModule({
@@ -46,7 +52,6 @@ registerLocaleData(localeGr);
     NavComponent,
     LoginComponent,
     HomeComponent,
-    TicketManagementComponent,
     EntranceRegisterComponent,
     HasRoleDirective,
     RegisterComponent,
@@ -62,7 +67,11 @@ registerLocaleData(localeGr);
     BookingCalendarListComponent,
     BookingCalendarDetailComponent,
     BookingCalendarBookingsComponent,
-    InfoDialogComponent
+    InfoDialogComponent,
+    ShowManagementIndexComponent,
+    ShowManagementViewComponent,
+    ShowManagementAddComponent,
+    TextAreaComponent
   ],
   imports: [
     BrowserModule,
@@ -79,7 +88,8 @@ registerLocaleData(localeGr);
     TabsModule.forRoot(),
     ModalModule.forRoot(),
     PaginationModule.forRoot(),
-    NgxGalleryModule
+    NgxMaterialTimepickerModule.setLocale('el'),
+    NgSelectModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},

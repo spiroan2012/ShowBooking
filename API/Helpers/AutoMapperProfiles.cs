@@ -34,6 +34,7 @@ namespace API.Helpers
                 .ForMember(dest => dest.HallDescription, opt => opt.MapFrom(src => src.Hall.Description))
                 .ForMember(dest => dest.HallEmail, opt => opt.MapFrom(src => src.Hall.EmailAddress))
                 .ForMember(dest => dest.HallPhone, opt => opt.MapFrom(src => src.Hall.Phone))
+                .ForMember(dest => dest.HallId, opt => opt.MapFrom(src => src.Hall.Id))
                 .ForMember(dest => dest.HallCapacity, opt => opt.MapFrom(src => src.Hall.Capacity))
                 .ForMember(dest => dest.Actors, opt => opt
                     .MapFrom(src => src.Actors.Split(",", StringSplitOptions.None).ToList()))

@@ -8,6 +8,7 @@ export interface Show{
     directors: string[];
     duration: number;
     timeStart: Date;
+    hallId: number;
     hallName: string;
     hallAddress: string;
     hallPhone: string;

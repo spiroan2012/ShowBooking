@@ -1,0 +1,70 @@
+<div class="row justify-content-center">
+    
+    <div class="col-4">
+        <form [formGroup] = "showForm" (ngSubmit) = "showForm.dirty && showForm.valid && submitForm()" autocomplete="off">
+            <h2 class="text-center text-primary">{{title}}</h2>
+            <hr>
+            <div>
+                <label for="title">Τίτλος:</label>
+                <app-text-input [formControl] = 'showForm.controls["title"]' [label] = "'Μέχρι 60 χαρακτήρες'"></app-text-input>
+            </div>
+            <div>
+                <label for="title">Περιγραφή:</label>
+                <app-text-area [formControl] = 'showForm.controls["description"]' [label] = "'Μέχρι 600 χαρακτήρες'"></app-text-area>
+            </div>
+            <div>
+                <label for="title">Ημερομηνία έναρξης:</label>
+                <app-date-input [formControl] = 'showForm.controls["dateStart"]' [label] = "'Ημερομηνία έναρξης'" [maxDate] = "maxDate"></app-date-input>
+            </div>
+            <div>
+                <label for="title">Ημερομηνία λήξης:</label>
+                <app-date-input [formControl] = 'showForm.controls["dateEnd"]' [minDate]="minDate" [label] = "'Ημερομηνία λήξης'" [maxDate] = "maxDate"></app-date-input>
+            </div>
+            <div>
+                <label for="title">Θέατρο:</label>
+                <ng-select [items]="dropdownHalls" 
+                    [class.is-invalid] = 'showForm.controls["hall"].touched && showForm.controls["hall"].invalid'
+                    [formControl]='showForm.controls["hall"]'
+                    bindLabel="name" 
+                    bindValue="id" 
+                    (change) = "checkSelected()"
+                    [(ngModel)]="selectedHall"
+                    style="margin-top: 5px; margin-bottom: 25px;">
+                </ng-select>
+                <div *ngIf = 'showForm.controls["hall"]?.errors?.required" class="form-control"  class="invalid-feedback'>Παρακαλώ επιλέξτε ένα θέατρο</div>
+            </div>
+
+            <div>
+                <label for="title">Ώρα έναρξης:</label><br>
+                <input [class.is-invalid] = 'showForm.controls["timeStart"].touched && showForm.controls["timeStart"].invalid'  [ngxTimepicker]="picker" placeholder="Ωρα" [formControl]='showForm.controls["timeStart"]' style="margin-top: 5px; margin-bottom: 25px;">
+                <ngx-material-timepicker #picker></ngx-material-timepicker>
+                <div *ngIf = 'showForm.controls["timeStart"]?.errors?.required" class="form-control"  class="invalid-feedback'>Παρακαλώ εισάγετε μια ώρα</div>
+            </div>
+            <div>
+                <label for="title">Διάρκεια:</label>
+                <app-text-input [type]="'number'" [formControl] = 'showForm.controls["duration"]' [label] = "'Θετικός αριθμός'"></app-text-input>
+            </div>
+            <div>
+                <label for="title">Ηθοποιοί:</label>
+                <app-text-area [formControl] = 'showForm.controls["actors"]' [label] = "'Τα ονόματα χωρισμένα με κόμμα'"></app-text-area>
+            </div>
+            <div>
+                <label for="title">Σκηνοθέτες:</label>
+                <app-text-area [formControl] = 'showForm.controls["directors"]' [label] = "'Τα ονόματα χωρισμένα με κόμμα'"></app-text-area>
+            </div>
+            <div class="row" *ngIf="validationErrors.length > 0">
+                <ul class="text-danger">
+                    <li *ngFor="let error of validationErrors">
+                        {{error}}
+                    </li>
+                </ul>
+            </div>
+        
+            <div class="form-group text-center">
+                <button class="btn btn-success mr-2" type="submit" [disabled] = '!showForm.valid && !showForm.dirty' style="margin-right:10px;">{{editMode ? "Επεξεργασία" : "Δημιουργία"}}</button>
+                <button class="btn btn-warning mr-2" style="margin-right:10px;" (click) ="showForm.reset()" type="button" *ngIf="!editMode">Καθάρισμα</button>
+                <a href="#" routerLink="/show-management-index" class="btn btn-primary">Πίσω</a>
+            </div>
+        </form>
+    </div>
+</div>

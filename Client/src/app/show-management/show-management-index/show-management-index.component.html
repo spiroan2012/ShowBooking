@@ -1,0 +1,52 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <form #form = "ngForm" class="form-inline" (ngSubmit)="loadShows()">
+                <input type="text" id="search" [(ngModel)]="showParams.searchTitle" name="search" class="input-small" placeholder="Τίτλος">
+                <select (change)="this.showParams.pageNumber = 1;this.loadShows()" [(ngModel)]="showParams.pageSize" class="form-control form-control-sm" id="searchon" name="searchon">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                </select>
+                <button type="submit" class="btn btn-success">Αναζήτηση</button>
+            </form>       
+        </div>      
+    </div>
+    <a href="#" routerLink="/show-management-create/" class="btn btn-success">Δημιουργία παράστασης</a>
+    <div *ngIf="shows.length > 0">
+        <table class="table table-bordered">
+            <tr>
+              <th>Κωδικός</th>
+              <th>Τίτλος</th>
+              <th>Ημερομηνία από</th>
+              <th>Ημερομηνία έως</th>
+              <th>Ώρα</th>
+              <th>Θέατρο</th>
+            </tr>
+            <tr *ngFor="let show of shows">
+                <td>{{show.id}}</td>
+                <td>{{show.title}}</td>
+                <td>{{show.dateStart | date: 'd MMM, y'}}</td>
+                <td>{{show.dateEnd | date: 'd MMM, y' }}</td>
+                <td>{{show.timeStart| date: 'h:mm a'}}</td>
+                <td>{{show.hallName}}</td>
+                <td><button  [routerLink]="['/show-management-view/', show.id]" class="btn btn-info">Εμφάνιση</button></td>
+                <td><button [routerLink]="['/show-management-edit/', show.id]" class="btn btn-primary">Επεξεργασία</button></td>   
+                <td><button (click) = "deleteShow(show.id,show.title)" class="btn btn-danger">Διαγραφή</button></td>
+            </tr>
+          </table>
+          <div class="d-flex justify-content-center" *ngIf="pagination">
+            <pagination 
+                [boundaryLinks]="true" 
+                [totalItems]="pagination.totalItems"
+                [itemsPerPage] = "pagination.itemsPerPage"
+                [(ngModel)]="pagination.currentPage"
+                (pageChanged) = "pageChanged($event)"
+                previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
+         
+            </pagination>
+        </div>
+    </div>
+    <h6 *ngIf="shows.length == 0">Δεν βρέθηκαν παραστάσεις με τα στοιχεία που δώσατε</h6>
+ </div>

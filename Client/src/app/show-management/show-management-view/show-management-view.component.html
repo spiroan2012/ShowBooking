@@ -1,0 +1,60 @@
+<div class="container">
+    <h1>Εμφάνιση παράστασης {{show.title}}</h1>
+    <a href="#" routerLink="/show-management-index" class="btn btn-primary">Πίσω</a>
+    <div>
+        <strong>Κωδικός:</strong>
+        <p>{{ show.id }}</p>
+    </div>
+    <div>
+        <strong>Τίτλος:</strong>
+        <p>{{ show.title }}</p>
+    </div>
+    <div>
+        <strong>Περιγραφή:</strong>
+        <p>{{ show.description }}</p>
+    </div>
+    <div>
+        <strong>Ημερομηνία έναρξης:</strong>
+        <p>{{ show.dateStart | date: 'd MMM, y' }}</p>
+    </div>
+    <div>
+        <strong>Ημερομηνία λήξης:</strong>
+        <p>{{ show.dateEnd | date: 'd MMM, y' }}</p>
+    </div>
+    <div>
+        <strong>Ώρα έναρξης:</strong>
+        <p>{{ show.timeStart | date: 'h:mm a' }}</p>
+    </div>
+    <div>
+        <strong>Διάρκεια:</strong>
+        <p>{{ show.duration}} λεπτά</p>
+    </div>
+    <div>
+        <strong>Ηθοποιοί:</strong>
+        <p>{{ show.actors}}</p>
+    </div>
+    <div>
+        <strong>Σκηνοθέτες:</strong>
+        <p>{{ show.directors}}</p>
+    </div>
+    <div>
+        <strong>Θέατρο:</strong>
+        <p>{{ show.hallName}}</p>
+    </div>
+    <div>
+        <strong>Διεύθυνση:</strong>
+        <p>{{ show.hallAddress}}</p>
+    </div>
+    <div>
+        <strong>Τηλέφωνο:</strong>
+        <p>{{ show.hallPhone}}</p>
+    </div>
+    <div>
+        <strong>email:</strong>
+        <p>{{ show.hallEmail}}</p>
+    </div>
+    <div>
+        <strong>Περιγραφή θεάτρου:</strong>
+        <p>{{ show.hallDescription}}</p>
+    </div>
+</div>

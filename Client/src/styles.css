@@ -1,3 +1,4 @@
+@import "~@ng-select/ng-select/themes/default.theme.css";
 /* You can add global styles to this file, and also import other style files */
 .tab-panel {
     border: 1px solid #ddd;
@@ -8,3 +9,5 @@
   .nav-tabs > li.open, .member-tabset > .nav-tabs > li:hover {
     border-bottom: 4px solid #fbcdcf;
   }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
