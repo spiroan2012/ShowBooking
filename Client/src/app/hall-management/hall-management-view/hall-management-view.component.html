@@ -1,0 +1,34 @@
+<div class="container">
+    <h1>Εμφάνιση θεάτρου {{hall.title}}</h1>
+    <a href="#" routerLink="/hall-management-index" class="btn btn-primary">Πίσω</a>
+    <div>
+        <strong>Κωδικός:</strong>
+        <p>{{ hall.id }}</p>
+    </div>
+    <div>
+        <strong>Τίτλος:</strong>
+        <p>{{ hall.title }}</p>
+    </div>
+    <div>
+        <strong>Περιγραφή:</strong>
+        <p>{{ hall.description }}</p>
+    </div>
+    <div>
+        <strong>Διεύθυνση:</strong>
+        <p>{{ hall.description }}</p>
+    </div>
+    <div>
+        <strong>Τηλέφωνο:</strong>
+        <p>{{ hall.phone }}</p>
+    </div>
+    <div>
+        <strong>Email:</strong>
+        <p>{{ hall.emailAddress }}</p>
+    </div>
+    <div>
+        <strong>Χωρητικότητα:</strong>
+        <p>{{ hall.capacity}} άτομα</p>
+    </div>
+    <hr>
+    <app-show-management-index [hallId] ="hall.id"></app-show-management-index>
+</div>

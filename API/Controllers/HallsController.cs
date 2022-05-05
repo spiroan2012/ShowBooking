@@ -48,9 +48,7 @@ namespace API.Controllers
         {
             var shows = await _hallsRepository.GetShowsOfHallAsync(id, hallParams);
 
-            if (shows == null) return NotFound("We could not found any show for hall " + id);
-
-            Response.AddPaginationHeader(shows.CurrentPage, shows.PageSize, shows.TotalCount, shows.TotalPages);
+            //if (shows == null) return NotFound("We could not found any show for hall " + id);
 
             return Ok(_mapper.Map<IEnumerable<ShowDto>>(shows));
         }

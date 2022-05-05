@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Pagination } from 'src/app/_models/pagination';
 import { Show } from 'src/app/_models/show';
@@ -14,6 +14,7 @@ import { ShowsService } from 'src/app/_services/shows.service';
   styleUrls: ['./show-management-index.component.css']
 })
 export class ShowManagementIndexComponent implements OnInit {
+  @Input() hallId: number = -1;
   pagination: Pagination;
   showParams: ShowParams;
   shows: Show[] = [];
@@ -29,10 +30,18 @@ export class ShowManagementIndexComponent implements OnInit {
 
   loadShows(){
     this.showsService.setShowsParams(this.showParams);
-    this.showsService.getShows(this.showParams).subscribe(response =>{
-      this.shows = response.result;
-      this.pagination = response.pagination;
-    });
+    if(this.hallId != -1){
+      this.showsService.getShowsForHall(this.hallId).subscribe(response =>{
+        this.shows = response;
+      });
+    }
+    else{
+      this.showsService.getShows(this.showParams).subscribe(response =>{
+        this.shows = response.result;
+        this.pagination = response.pagination;
+      });
+    }
+
   }
 
   deleteShow(showId: number, showTitle: string){

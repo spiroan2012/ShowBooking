@@ -1,0 +1,46 @@
+<div class="row justify-content-center">
+    
+    <div class="col-4">
+        <form [formGroup] = "hallForm" (ngSubmit) = "hallForm.dirty && hallForm.valid && submitForm()" autocomplete="off">
+            <h2 class="text-center text-primary">{{title}}</h2>
+            <hr>
+            <div>
+                <label for="title">Τίτλος:</label>
+                <app-text-input [formControl] = 'hallForm.controls["title"]' [label] = "'Τίτλος'"></app-text-input>
+            </div>
+            <div>
+                <label for="title">Περιγραφή:</label>
+                <app-text-area [formControl] = 'hallForm.controls["description"]' [label] = "'Περιγραφή'"></app-text-area>
+            </div>
+            <div>
+                <label for="title">Χωρητικότητα:</label>
+                <app-text-input [type]="'number'" [formControl] = 'hallForm.controls["capacity"]' [label] = "'Χωρητικότητα'"></app-text-input>
+            </div>
+            <div>
+                <label for="title">Διευθυνση:</label>
+                <app-text-input [formControl] = 'hallForm.controls["address"]' [label] = "'Διευθυνση'"></app-text-input>
+            </div>
+            <div>
+                <label for="title">Τηλέφωνο:</label>
+                <app-text-input [formControl] = 'hallForm.controls["phone"]' [label] = "'Τηλέφωνο'"></app-text-input>
+            </div>
+            <div>
+                <label for="title">Email:</label>
+                <app-text-input [formControl] = 'hallForm.controls["emailAddress"]' [label] = "'Email'"></app-text-input>
+            </div>
+            <div class="row" *ngIf="validationErrors.length > 0">
+                <ul class="text-danger">
+                    <li *ngFor="let error of validationErrors">
+                        {{error}}
+                    </li>
+                </ul>
+            </div>
+        
+            <div class="form-group text-center">
+                <button class="btn btn-success mr-2" type="submit" [disabled] = '!hallForm.valid' style="margin-right:10px;">{{editMode ? "Επεξεργασία" : "Δημιουργία"}}</button>
+                <button class="btn btn-warning mr-2" style="margin-right:10px;" (click) ="hallForm.reset()" type="button" *ngIf="!editMode">Καθάρισμα</button>
+                <a href="#" routerLink="/show-management-index" class="btn btn-primary">Πίσω</a>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,51 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <form #form = "ngForm" class="form-inline" (ngSubmit)="loadHalls()">
+                <input type="text" id="search" [(ngModel)]="hallParams.searchTitle" name="search" class="input-small" placeholder="Τίτλος">
+                <select (change)="this.hallParams.pageNumber = 1;this.loadHalls()" [(ngModel)]="hallParams.pageSize" class="form-control form-control-sm" id="searchon" name="searchon">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                </select>
+                <button type="submit" class="btn btn-success">Αναζήτηση</button>
+            </form>       
+        </div>      
+    </div>
+    <a href="#" routerLink="/hall-management-create/" class="btn btn-success">Δημιουργία θεάτρου</a>
+    <div *ngIf="halls.length > 0">
+        <table class="table table-bordered">
+            <tr>
+              <th>Κωδικός</th>
+              <th>Τίτλος</th>
+              <th>Διευθυνση</th>
+              <th>Τηλέφωνο</th>
+              <th>email</th>
+              <th>Χωρητικότητα</th>
+            </tr>
+            <tr *ngFor="let hall of halls">
+                <td>{{hall.id}}</td>
+                <td>{{hall.title}}</td>
+                <td>{{hall.address}}</td>
+                <td>{{hall.phone}}</td>
+                <td>{{hall.emailAddress}}</td>
+                <td>{{hall.capacity}}</td>
+                <td><button  [routerLink]="['/hall-management-view/', hall.id]" class="btn btn-info">Εμφάνιση</button></td>
+                <td><button [routerLink]="['/hall-management-edit/', hall.id]" class="btn btn-primary">Επεξεργασία</button></td>  
+            </tr>
+          </table>
+          <div class="d-flex justify-content-center" *ngIf="pagination">
+            <pagination 
+                [boundaryLinks]="true" 
+                [totalItems]="pagination.totalItems"
+                [itemsPerPage] = "pagination.itemsPerPage"
+                [(ngModel)]="pagination.currentPage"
+                (pageChanged) = "pageChanged($event)"
+                previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
+         
+            </pagination>
+        </div>
+    </div>
+    <h6 *ngIf="halls.length == 0">Δεν βρέθηκαν θέατρα με τα στοιχεία που δώσατε</h6>
+ </div>

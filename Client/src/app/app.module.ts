@@ -42,6 +42,9 @@ import { ShowManagementAddComponent } from './show-management/show-management-ad
 import { TextAreaComponent } from './_forms/text-area/text-area.component';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { HallManagementIndexComponent } from './hall-management/hall-management-index/hall-management-index.component';
+import { HallManagementViewComponent } from './hall-management/hall-management-view/hall-management-view.component';
+import { HallManagementAddComponent } from './hall-management/hall-management-add/hall-management-add.component';
 
 registerLocaleData(localeGr);
 
@@ -71,7 +74,10 @@ registerLocaleData(localeGr);
     ShowManagementIndexComponent,
     ShowManagementViewComponent,
     ShowManagementAddComponent,
-    TextAreaComponent
+    TextAreaComponent,
+    HallManagementIndexComponent,
+    HallManagementViewComponent,
+    HallManagementAddComponent
   ],
   imports: [
     BrowserModule,

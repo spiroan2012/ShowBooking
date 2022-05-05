@@ -72,15 +72,17 @@ namespace Infrastructure.Repositories
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public async Task<PagedList<Show>> GetShowsOfHallAsync(int id, HallParams hallParams)
+        public async Task<IReadOnlyList<Show>> GetShowsOfHallAsync(int id, HallParams hallParams)
         {
             var hall = await _context.Halls
                 .Include(p => p.Shows)
                 .SingleOrDefaultAsync(p => p.Id == id);
 
-            var query = hall?.Shows.AsQueryable();
+            return hall.Shows.Where(s => s.DateEnd >= DateTime.Now).ToArray();
 
-            return await PagedList<Show>.CreateAsync(query, hallParams.PageNumber, hallParams.PageSize);
+            //var query = hall?.Shows.AsQueryable();
+
+            //eturn await PagedList<Show>.CreateAsync(query, hallParams.PageNumber, hallParams.PageSize);
         }
 
         public async Task<IReadOnlyList<Hall>> GetHallsWithoutPaginationAsync()

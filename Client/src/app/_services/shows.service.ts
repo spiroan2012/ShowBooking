@@ -49,6 +49,10 @@ export class ShowsService {
       }))
    }
 
+   getShowsForHall(hallId: number){
+      return this.http.get<Show[]>(this.baseUrl+'halls/GetShowsOfHall/'+hallId);
+   }
+
    getShow(showId: number){
      return this.http.get<Show>(this.baseUrl+'show/'+showId);
    }
