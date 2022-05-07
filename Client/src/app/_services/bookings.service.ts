@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { take } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
@@ -27,5 +27,23 @@ export class BookingsService {
       params = params.append('showId', showId);
       params = params.append('date', givenDate);
       return this.http.get<Booking[]>(this.baseUrl+'booking/GetBookingsForShowAndDate', {params: params});
+   }
+
+   searchForBookingForUser(formData: FormData){
+    const httpOptions = {
+      headers: new HttpHeaders({'Content-Type': 'multipart/form-data'})
+    }
+     return this.http.post<Booking[]>(this.baseUrl+'booking/GetBookingForUserByEmail', formData);
+   }
+
+   updateBookingToAppeared(bookingId: number){
+    const httpOptions = {
+      headers: new HttpHeaders({'Content-Type': 'application/json'})
+    }
+     return this.http.patch(this.baseUrl+'booking/'+bookingId, httpOptions);
+   }
+
+   getBookingsForLoggedUser(){
+     return this.http.get<Booking[]>(this.baseUrl+'booking/GetBookingsForLoggedUser');
    }
 }

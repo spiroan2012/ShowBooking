@@ -1,3 +1,4 @@
+import { Show } from "./show";
 import { User } from "./user";
 
 export interface Booking{
@@ -6,5 +7,6 @@ export interface Booking{
     user: User;
     numOfSeats: number;
     appeared: boolean;
+    show: Show;
     seats: string[];
 }

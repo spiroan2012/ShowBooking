@@ -62,7 +62,9 @@ namespace Infrastructure.Repositories
         public async Task<IReadOnlyList<Booking>> GetBookingsForUserAync(AppUser user)
         {
             var data = await _context.Bookings
-                .Where(p => p.User.Id == user.Id)
+                .Include(s => s.Show)
+                .Include(s => s.Seats)
+                .Where(p => p.User.Id == user.Id && p.Appeared == false)
                 .ToListAsync();
             return data;
         }
@@ -74,6 +76,21 @@ namespace Infrastructure.Repositories
                 .Include(b => b.Seats)
                 .Include(b =>b.User)
                 .ToListAsync();
+        }
+        public async Task SetAppearForBooking(int bookingId)
+        {
+            var booking =  _context.Bookings.Where(b => b.Id == bookingId).FirstOrDefault();
+            booking.Appeared = true;
+        }
+
+        public async Task<IEnumerable<Booking>> GetBookingsForUserNotAppearedAync(AppUser user)
+        {
+            var data = await _context.Bookings
+                .Where(p => p.User.Id == user.Id && p.Appeared == false)
+                .Include(s => s.Show)
+                .Include(s => s.Seats)
+                .ToListAsync();
+            return data;
         }
     }
 }

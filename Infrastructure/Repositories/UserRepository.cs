@@ -32,6 +32,13 @@ namespace Infrastructure.Repositories
             return user;
         }
 
+        public async Task<AppUser> GetUserByEmailAsync(string email)
+        {
+            var user = await _context.Users
+                .SingleOrDefaultAsync(x => x.Email == email);
+            return user;
+        }
+
         public async Task<PagedList<AppUser>> GetUsersAsync(UserParams userParams )
         {
             var query = _context.Users.AsQueryable();

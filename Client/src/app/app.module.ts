@@ -28,7 +28,6 @@ import {PaginationModule} from 'ngx-bootstrap/pagination';
 import { ShowBookingListComponent } from './show-booking/show-booking-list/show-booking-list.component';
 import { ShowBookingCardComponent } from './show-booking/show-booking-card/show-booking-card.component';
 import { ShowBookingDetailsComponent } from './show-booking/show-booking-details/show-booking-details.component';
-import { NgxGalleryModule } from '@kolkov/ngx-gallery';
 import localeGr from '@angular/common/locales/el';
 import { registerLocaleData } from '@angular/common';
 import { ShowBookingReserveComponent } from './show-booking/show-booking-reserve/show-booking-reserve.component';
@@ -45,6 +44,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { HallManagementIndexComponent } from './hall-management/hall-management-index/hall-management-index.component';
 import { HallManagementViewComponent } from './hall-management/hall-management-view/hall-management-view.component';
 import { HallManagementAddComponent } from './hall-management/hall-management-add/hall-management-add.component';
+import { EntranceRegisterGuestComponent } from './entrance-register/entrance-register-guest/entrance-register-guest.component';
+import { EntranceRegisterListComponent } from './entrance-register/entrance-register-list/entrance-register-list.component';
 
 registerLocaleData(localeGr);
 
@@ -77,7 +78,9 @@ registerLocaleData(localeGr);
     TextAreaComponent,
     HallManagementIndexComponent,
     HallManagementViewComponent,
-    HallManagementAddComponent
+    HallManagementAddComponent,
+    EntranceRegisterGuestComponent,
+    EntranceRegisterListComponent
   ],
   imports: [
     BrowserModule,

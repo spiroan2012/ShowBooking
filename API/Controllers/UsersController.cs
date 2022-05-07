@@ -48,5 +48,14 @@ namespace API.Controllers
             if (user is null) return NotFound("User with username " + username + " was not found");
             return Ok(_mapper.Map<UserDto>(user));
         }
+
+
+        //[HttpGet("GetByEmail/{email}")]
+        //public async Task<ActionResult<IEnumerable<UserDto>>> GetUserByEmail(string email)
+        //{
+        //    var user = await _userRepository.GetUserByEmailAsync(email);
+        //    if (user is null) return Ok(null);
+        //    return Ok(_mapper.Map<UserDto>(user));
+        //}
     }
 }

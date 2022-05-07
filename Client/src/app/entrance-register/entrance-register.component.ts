@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AccountService } from '../_services/account.service';
 
 @Component({
   selector: 'app-entrance-register',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EntranceRegisterComponent implements OnInit {
 
-  constructor() { }
+  constructor(public accountService: AccountService) { }
 
   ngOnInit(): void {
   }

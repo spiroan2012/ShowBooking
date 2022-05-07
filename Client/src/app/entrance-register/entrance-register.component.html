@@ -1,1 +1,4 @@
-<p>entrance-register works!</p>
+<div class="container">
+    <app-entrance-register-list *ngIf="(accountService.currentUser | async) else guest"></app-entrance-register-list>
+    <ng-template #guest><app-entrance-register-guest ></app-entrance-register-guest></ng-template>
+</div>

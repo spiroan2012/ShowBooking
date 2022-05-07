@@ -15,6 +15,8 @@ namespace Core.Interfaces
         Task<bool> CheckIfReserved(int showId, DateTime dateOfShow, AppUser user);
         Task<IReadOnlyList<Booking>> GetBookingsForUserAync(AppUser user);
         Task<bool> Complete();
+        Task SetAppearForBooking(int bookingId);
         Task<IEnumerable<Booking>> GetBookingsForShowAndDate(int showId, DateTime dateGiven);
+        Task<IEnumerable<Booking>> GetBookingsForUserNotAppearedAync(AppUser user);
     }
 }

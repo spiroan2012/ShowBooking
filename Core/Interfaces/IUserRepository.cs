@@ -13,6 +13,7 @@ namespace Core.Interfaces
         void Update(AppUser user);
         Task<PagedList<AppUser>> GetUsersAsync(UserParams userParams);
         Task<AppUser> GetUserByIdAsync(int id);
+        Task<AppUser> GetUserByEmailAsync(string email);
         Task<AppUser> GetUserByUsernameAsync(string username);
     }
 }

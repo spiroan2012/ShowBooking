@@ -22,6 +22,7 @@ import { HallDetailResolver } from './_resolvers/hall-detail.resolver';
 import { HallManagementAddComponent } from './hall-management/hall-management-add/hall-management-add.component';
 import { PreventUnsavedChangesHallsGuard } from './_guards/prevent-unsaved-changes-halls.guard';
 
+
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {
@@ -41,7 +42,7 @@ const routes: Routes = [
       {path: 'hall-management-edit/:id', component: HallManagementAddComponent, canActivate: [ModeratorAuthGuard], canDeactivate: [PreventUnsavedChangesHallsGuard]},
       {path: 'hall-management-view/:id',component: HallManagementViewComponent, resolve:{show: HallDetailResolver}},
       {path: 'admin-panel', component: AdminPanelComponent, canActivate: [AdminAuthGuard]},
-      {path: 'entrance-register', component: EntranceRegisterComponent, canActivate: [UserAuthGuard]}
+      {path: 'entrance-register', component: EntranceRegisterComponent}
       
     ]
   }

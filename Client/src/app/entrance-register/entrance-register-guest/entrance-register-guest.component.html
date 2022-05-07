@@ -1,0 +1,70 @@
+
+﻿<div class="card">
+    <div class="card-header">
+      Δήλωση παρουσίας
+    </div>
+    <div class="card-body">
+      <div class="container-fluid">
+        <h2>Ευρεση κράτησης</h2>
+    <form [formGroup]="fileForm" (ngSubmit)="saveFileInfo()">
+
+      <div class="form-group">
+        <label>Όνομα:</label>
+        <input type="text" class="form-control" formControlName="firstName" name="firstName">
+        <div *ngIf="fileForm.value.firstName.invalid && (fileForm.value.firstName.dirty || fileForm.value.firstName.touched)" class="alert">
+            <div *ngIf="fileForm.value.firstName.errors?.['required']">
+                Το όνομα είναι υποχρεωτικό
+            </div>
+        </div>
+        
+      </div>
+      <div class="form-group">
+        <label>Επώνυμο:</label>
+        <input type="text" class="form-control" formControlName="lastName" name="lastName">
+        <div *ngIf="fileForm.value.lastName.errors?.['required']">
+            Το όνομα είναι υποχρεωτικό
+          </div>
+      </div>
+      <div  class="form-group">
+        <label>email:</label>
+        <input type="text" class="form-control" formControlName="emailAddress" name="emailAddress">
+        <div *ngIf="fileForm.value.emailAddress.errors?.['required']">
+            Το email είναι υποχρεωτικό
+          </div>
+          <div *ngIf="fileForm.value.emailAddress.errors?.['invalidPatternEmail']">
+            Μη έγκυρο email
+          </div>
+      </div>
+      <div class="form-group">
+        <label for="myFile">Φωτογραφία:</label>
+        <input type="file" class="form-control" accept="image/*" (change)="handleFileInput($event)" name="file">
+      </div>
+      <br/>
+      <button type="submit"  class="btn btn-primary">Submit</button>
+    </form>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top: 15px;" *ngIf="bookingsFound.length > 0">
+      <hr style="margin-top: 15px;">
+      <h6 style="margin-top: 15px;">Γειά σου {{fileForm.value.firstName}} {{fileForm.value.lastName}}</h6>
+    <table style="margin-top: 15px;" class="table table-bordered">
+        <tr>
+          <th>Κωδικός</th>
+          <th>Τίτλος</th>
+          <th>Ημερομηνία</th>
+          <th>Ώρα</th>
+          <th>Ημερομηνία/Ωρα κράτησης</th>
+          <th *ngIf="hallId == -1">Θέατρο</th>
+        </tr>
+        <tr *ngFor="let booking of bookingsFound ; index as i">
+            <td>{{booking.id}}</td>
+            <td>{{booking.show.title}}</td>
+            <td>{{booking.dateOfShow | date: 'd MMM, y'}}</td>
+            <td>{{booking.show.timeStart | date: 'h:mm a' }}</td>
+            <td>{{booking.bookingTimestamp | date: 'd MMM, y h:mm a'}}</td>
+            <td><button  type="btn btn-info" class="btn btn-info" (click)="setAppear(booking.id, i)">Δήλωση παρουσίας</button></td>
+            <td><button class="btn btn-info" (click)="openSeatsModal(i)">Θέσεις</button></td>
+        </tr>
+      </table>
+</div>
