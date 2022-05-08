@@ -4,6 +4,7 @@ using API.Helpers;
 using AutoMapper;
 using Core.Entities;
 using Core.Interfaces;
+using Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Hosting;
@@ -79,7 +80,13 @@ namespace API.Controllers
             if (!await _bookingRepository.Complete()) return BadRequest("Failed to add the booking ");
 
             _bookingRepository.ReserveSeatsForBooking(booking, createBookingDto.Seats, user);
-            if (await _bookingRepository.Complete()) return Ok(_mapper.Map<BookingDto>(booking));
+            if (await _bookingRepository.Complete()) 
+            {
+                string dateOfShow = booking.DateOfShow.ToString("dd/MM/yyyy");
+                string timeOfShow = show.TimeStart.ToString("hh:mm");
+                SendEmailToClient(user, show.Title, dateOfShow, timeOfShow, String.Join("-", booking.Seats));
+                return Ok(_mapper.Map<BookingDto>(booking));
+            } 
             return BadRequest("Failed to add the booking ");
         }
 
@@ -149,6 +156,21 @@ namespace API.Controllers
                 return true;
             }
             return false;
+        }
+
+        private static void SendEmailToClient(AppUser user,string title, string dateOfShow, string timeOfShow, string seats)
+        {
+            string emailText = "Αγαπητέ/ή " + user.FirstName + " " + user.LastName +
+                "\n\nΗ κράτηση σου για την παράσταση " + title + " στις " + dateOfShow + " και ώρα " + timeOfShow +
+                " ολοκληρώθηκε με επιτυχία. Οι θέσεις σας είναι " + seats + ". Παρακαλω΄να είστε στον χώρο του θεάτρου τουλάχιστον μισή ώρα πριν.\n\n" +
+                "Ευχαριστούμε για την προτίμηση και την εμπιστοσύνη.\n\nΜε εκτίμηση,\n\nΗ ομάδα του ShowBooking";
+            EmailService emailService = new EmailService()
+            {
+                Subject = "Στοιχεία κράτησης",
+                MessageBody = emailText,
+                Recipient = user.Email
+            };
+            emailService.SendEmail();
         }
     }
 }
