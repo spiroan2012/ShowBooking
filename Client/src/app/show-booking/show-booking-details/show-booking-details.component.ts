@@ -36,7 +36,7 @@ export class ShowBookingDetailsComponent implements OnInit {
   }
 
   selectTab(tabId: number){
-    this.showTabs.tabs[tabId].active = true;
+    //this.showTabs.tabs[tabId].active = true;
   }
 
   onTabActivated(data: TabDirective){
