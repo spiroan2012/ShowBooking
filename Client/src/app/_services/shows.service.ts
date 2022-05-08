@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -11,6 +12,7 @@ import { User } from '../_models/user';
 import { AccountService } from './account.service';
 import { getPaginatedResult, getPaginationHeaders } from './paginationHelper';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -20,7 +22,7 @@ export class ShowsService {
   user: User;
   showParams: ShowParams;
 
-  constructor(private http: HttpClient, private accountService: AccountService) {
+  constructor(private http: HttpClient, private accountService: AccountService, private datePipe: DatePipe) {
     this.accountService.currentUser.pipe(take(1)).subscribe(user => {
       this.user = user;
     });
@@ -60,7 +62,8 @@ export class ShowsService {
    getSeatsOfShow(model: any): Observable<ShowSeat[]>{
     let params = new HttpParams();
     let myDate = new Date(model.showDate);
-    var dar = myDate.getDate()+'/'+(myDate.getMonth()+1)+'/'+myDate.getFullYear();
+    //var dar = myDate.getDate()+'/'+(myDate.getMonth()+1)+'/'+myDate.getFullYear();
+    var dar = this.datePipe.transform(myDate, 'yyyy/MM/dd');
     params = params.append('showId', model.showId.toString());
     params = params.append('showDate', dar);
     return this.http.get<ShowSeat[]>(this.baseUrl+'show/GetSeatsOfShow', {params:params})

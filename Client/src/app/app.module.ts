@@ -46,6 +46,7 @@ import { HallManagementViewComponent } from './hall-management/hall-management-v
 import { HallManagementAddComponent } from './hall-management/hall-management-add/hall-management-add.component';
 import { EntranceRegisterGuestComponent } from './entrance-register/entrance-register-guest/entrance-register-guest.component';
 import { EntranceRegisterListComponent } from './entrance-register/entrance-register-list/entrance-register-list.component';
+import { DatePipe } from '@angular/common';
 
 registerLocaleData(localeGr);
 
@@ -103,7 +104,8 @@ registerLocaleData(localeGr);
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
-    {provide: LOCALE_ID, useValue: 'el'}
+    {provide: LOCALE_ID, useValue: 'el'},
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })

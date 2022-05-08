@@ -20,4 +20,4 @@
       </tr>
     </table>
 </div>
-<h6 style="margin: 15px;">Δεν έχετε καμία κράτηση</h6>
+<h6 style="margin: 15px;" *ngIf="bookingsFound.length == 0">Δεν έχετε καμία κράτηση</h6>
