@@ -96,4 +96,10 @@ export class UserManagementComponent implements OnInit {
     });
     return roles
   }
+
+  pageChanged(event: any){
+    this.userParams.pageNumber = event.page;
+    this.adminService.setUserParams(this.userParams);
+    this.getUsersWithRoles();
+  }
 }

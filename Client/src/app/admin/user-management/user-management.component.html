@@ -5,6 +5,12 @@
             <input type="text" class="form-control ml-1" style="width: 30 px;" name="searchUser"
                 [(ngModel)]="userParams.searchUsername">
         </div>
+        <select (change)="this.userParams.pageNumber = 1;this.getUsersWithRoles()" [(ngModel)]="userParams.pageSize" class="form-control form-control-sm" id="searchon" name="searchon">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="50">50</option>
+        </select>
         <button class="btn btn-primary ml-1" type="submit">Apply filters</button>
 
     </form>        
@@ -13,7 +19,7 @@
     <table class="table">
         <thead>
             <tr>
-                <th scope="col">Ον.χρήστη</th>
+                <th scope="col" class="col-md-2">Ον.χρήστη</th>
                 <th scope="col">Όνομα</th>
                 <th scope="col">Επώνυμο</th>
                 <th scope="col">Email</th>
@@ -24,7 +30,7 @@
         </thead>
         <tbody>
             <tr *ngFor="let user of users">
-                <td>{{user.username}}</td>
+                <td class="col-md-2">{{user.username}}</td>
                 <td>{{user.firstName}}</td>
                 <td>{{user.lastName}}</td>
                 <td>{{user.email}}</td>
@@ -36,4 +42,15 @@
             </tr>
         </tbody>
     </table>
+    <div class="d-flex justify-content-center" *ngIf="pagination">
+        <pagination 
+            [boundaryLinks]="true" 
+            [totalItems]="pagination.totalItems"
+            [itemsPerPage] = "pagination.itemsPerPage"
+            [(ngModel)]="pagination.currentPage"
+            (pageChanged) = "pageChanged($event)"
+            previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
+     
+        </pagination>
+    </div>
 </div>
