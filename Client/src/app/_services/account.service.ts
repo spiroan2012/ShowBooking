@@ -2,8 +2,10 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../_models/user';
-import { ReplaySubject } from 'rxjs';
+import { Observable, ReplaySubject } from 'rxjs';
 import {map} from 'rxjs/operators';
+import { SocialAuthService } from 'angularx-social-login';
+
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +15,7 @@ export class AccountService {
   private currentuserSource = new ReplaySubject<User>(1);
   currentUser = this.currentuserSource.asObservable();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private socialAuthService: SocialAuthService) { }
 
   login(model: any){
     return this.http.post(this.baseUrl+'account/login', model).pipe(
@@ -30,6 +32,7 @@ export class AccountService {
   }
 
   logout(){
+    this.socialAuthService.signOut(true);
     localStorage.removeItem('user');
     this.currentuserSource.next(undefined);
   }
@@ -42,6 +45,18 @@ export class AccountService {
         }
       })
     )
+  }
+
+  loginExternal(user){
+    console.log("external");
+    return this.http.post<User>(this.baseUrl+'account/facebook-login', user).pipe(
+      map((user: User) => {
+        if(user){
+          this.setCurrentUser(user);
+        }
+        return user;
+      })
+    );
   }
 
   setCurrentUser(user: User){

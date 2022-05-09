@@ -47,6 +47,12 @@ import { HallManagementAddComponent } from './hall-management/hall-management-ad
 import { EntranceRegisterGuestComponent } from './entrance-register/entrance-register-guest/entrance-register-guest.component';
 import { EntranceRegisterListComponent } from './entrance-register/entrance-register-list/entrance-register-list.component';
 import { DatePipe } from '@angular/common';
+import { FacebookLoginProvider, SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
+// import {
+//   SocialLoginModule,
+//   SocialAuthServiceConfig,
+// } from 'angularx-social-login';
+// import { GoogleLoginProvider } from 'angularx-social-login';
 
 registerLocaleData(localeGr);
 
@@ -99,9 +105,36 @@ registerLocaleData(localeGr);
     ModalModule.forRoot(),
     PaginationModule.forRoot(),
     NgxMaterialTimepickerModule.setLocale('el'),
-    NgSelectModule
+    NgSelectModule,
+    SocialLoginModule
   ],
   providers: [
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: FacebookLoginProvider.PROVIDER_ID,
+            provider: new FacebookLoginProvider(
+              '1034357964127831'
+            )
+          }
+        ]
+      } as SocialAuthServiceConfig,
+    },
+    // {
+    //   provide: 'SocialAuthServiceConfig',
+    //   useValue: {
+    //     autoLogin: false,
+    //     providers: [
+    //       {
+    //         id: GoogleLoginProvider.PROVIDER_ID,
+    //         provider: new GoogleLoginProvider('126290248420-868rc5ntp3fgk7act69kjdqg26498432.apps.googleusercontent.com'),
+    //       },
+    //     ],
+    //   } as SocialAuthServiceConfig,
+    // },
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
     {provide: LOCALE_ID, useValue: 'el'},

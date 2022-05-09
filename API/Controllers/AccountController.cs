@@ -74,6 +74,48 @@ namespace API.Controllers
             };
         }
 
+        [HttpPost("facebook-login")]
+        public async Task<ActionResult<UserDto>> FacebookLogin(ExternalAuthDto externalAuthDto)
+        {
+            var user = await _userManager.FindByEmailAsync(externalAuthDto.Email); 
+            if(user == null)
+            {
+                var appUser = new AppUser
+                {
+                    UserName = externalAuthDto.Email,
+                    FirstName = externalAuthDto.FirstName,
+                    LastName = externalAuthDto.LastName,
+                    Email = externalAuthDto.Email
+                };
+
+                var result = await _userManager.CreateAsync(appUser);
+
+                if (!result.Succeeded) return Unauthorized();
+
+                var roleResult = await _userManager.AddToRoleAsync(appUser, "Member");
+
+                if (!roleResult.Succeeded) return BadRequest(roleResult.Errors);
+
+                return new UserDto
+                {
+                    Username = appUser.UserName,
+                    Token = await _tokenService.CreateToken(appUser)
+                };
+            }
+            else
+            {
+                return new UserDto
+                {
+                    Username = user.UserName,
+                    Token = await _tokenService.CreateToken(user),
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Gender = user.Gender,
+                    IsDisabled = user.IsDisabled
+                };
+            }
+        }
+
         private async Task<bool> UserExists(string username)
         {
             return await _userManager.Users.AnyAsync(x => x.UserName == username.ToLower());
