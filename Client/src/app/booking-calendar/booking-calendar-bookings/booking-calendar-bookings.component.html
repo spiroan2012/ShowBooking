@@ -17,7 +17,7 @@
             </thead>
             <tbody>
                 <tr *ngFor="let booking of bookings; index as i">
-                    <td>{{i}}</td>
+                    <td>{{(i+1)}}</td>
                     <td>{{booking.user.firstName}}</td>
                     <td>{{booking.user.lastName}}</td>
                     <td>{{booking.user.email}}</td>
