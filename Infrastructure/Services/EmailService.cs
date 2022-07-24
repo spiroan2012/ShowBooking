@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -30,10 +32,14 @@ namespace Infrastructure.Services
                 smtp.Port = 587;
                 smtp.Host = "smtp.gmail.com";
 
-                smtp.EnableSsl = true;
                 smtp.UseDefaultCredentials = false;
-                smtp.Credentials = new NetworkCredential("showbookingathens@gmail.com", "Protal2022!");
+                smtp.Credentials = new NetworkCredential("showbookingathens@gmail.com", "hnci euxz xlem lfdy");
                 smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+
+
+                smtp.EnableSsl = true;
+
+                ServicePointManager.ServerCertificateValidationCallback = delegate (object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) { return true; };
                 smtp.Send(message);
             }
             catch (Exception ex)

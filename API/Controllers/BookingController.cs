@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -84,7 +85,8 @@ namespace API.Controllers
             {
                 string dateOfShow = booking.DateOfShow.ToString("dd/MM/yyyy");
                 string timeOfShow = show.TimeStart.ToString("hh:mm");
-                SendEmailToClient(user, show.Title, dateOfShow, timeOfShow, String.Join("-", booking.Seats));
+                SendEmailToClient(user, show.Title, dateOfShow, timeOfShow, String.Join("-", 
+                    booking.Seats.Select(x => x.SeatNumber )));
                 return Ok(_mapper.Map<BookingDto>(booking));
             } 
             return BadRequest("Failed to add the booking ");

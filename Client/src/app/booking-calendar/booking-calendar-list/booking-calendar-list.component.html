@@ -1,16 +1,18 @@
-<div class="container mt-3">
-    <form [formGroup] = "dateSearchForm" (ngSubmit) = "dateSearchForm.valid"  autocomplete="off">
-        <app-date-input 
-            [formControl] = 'dateSearchForm.controls["dateOfShow"]' 
-            [label] = "'Ημερομηνία'" 
-            [minDate] ="minDate" 
-            [maxDate] = "maxDate"
-            >
-          </app-date-input>
-        <div class="form-group text-center">
-            <button class="btn btn-success mr-2" type="submit" (click)="getShowsForDate()">Αναζήτηση</button>
-        </div>
-      </form> 
+<div class="row justify-content-center">
+    <div class="col-4">
+        <form [formGroup] = "dateSearchForm" (ngSubmit) = "dateSearchForm.valid"  autocomplete="off">
+            <app-date-input 
+                [formControl] = 'dateSearchForm.controls["dateOfShow"]' 
+                [label] = "'Ημερομηνία'" 
+                [minDate] ="minDate" 
+                [maxDate] = "maxDate"
+                >
+            </app-date-input>
+            <div class="form-group text-center">
+                <button class="btn btn-success mr-2" type="submit" (click)="getShowsForDate()">Αναζήτηση</button>
+            </div>
+        </form> 
+    </div>  
 </div>
 <div *ngIf="showsForDate.length > 0">
     <div class="row">

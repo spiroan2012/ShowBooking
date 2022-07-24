@@ -1,7 +1,7 @@
 <div class="container">
     <h6 *ngIf="hallId != -1">Ενεργές παραστάσεις</h6>
-    <div *ngIf="hallId == -1" class="row">
-        <div class="col-md-8">
+    <div *ngIf="hallId == -1" class="row justify-content-center">
+        <div class="col-4">
             <form #form = "ngForm" class="form-inline" (ngSubmit)="loadShows()">
                 <input type="text" id="search" [(ngModel)]="showParams.searchTitle" name="search" class="input-small" placeholder="Τίτλος">
                 <select (change)="this.showParams.pageNumber = 1;this.loadShows()" [(ngModel)]="showParams.pageSize" class="form-control form-control-sm" id="searchon" name="searchon">

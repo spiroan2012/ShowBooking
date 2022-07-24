@@ -14,6 +14,8 @@ services:
     container_name: psql
     ports:
       - 5432:5432
+    volumes:
+      - pg-admin-vol:/var/lib/postgresql/data
     environment:
       - POSTGRES_PASSWORD=Pa$$w0rd
       - POSTGRES_USER=appuser
@@ -23,6 +25,13 @@ services:
     container_name: pgadmin
     ports:
       -  5050:80
+    volumes:
+      - db-vol:/var/lib/pgadmin 
     environment:
       - PGADMIN_DEFAULT_EMAIL=admin@admin.com
       - PGADMIN_DEFAULT_PASSWORD=root
+volumes:
+  pg-admin-vol:
+    external: false
+  db-vol:
+    external: false

@@ -1,6 +1,7 @@
 <div class="container">
-    <div class="row">
-        <div class="col-md-8">
+    <div class="row justify-content-center">
+        <div class="col-4">
+
             <form #form = "ngForm" class="form-inline" (ngSubmit)="loadHalls()">
                 <input type="text" id="search" [(ngModel)]="hallParams.searchTitle" name="search" class="input-small" placeholder="Τίτλος">
                 <select (change)="this.hallParams.pageNumber = 1;this.loadHalls()" [(ngModel)]="hallParams.pageSize" class="form-control form-control-sm" id="searchon" name="searchon">
@@ -11,7 +12,8 @@
                 </select>
                 <button type="submit" class="btn btn-success">Αναζήτηση</button>
             </form>       
-        </div>      
+        </div>    
+          
     </div>
     <a href="#" routerLink="/hall-management-create/" class="btn btn-success">Δημιουργία θεάτρου</a>
     <div *ngIf="halls.length > 0">
