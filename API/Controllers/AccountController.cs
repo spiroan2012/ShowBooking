@@ -94,6 +94,7 @@ namespace API.Controllers
 
                 var roleResult = await _userManager.AddToRoleAsync(appUser, "Member"); 
 
+
                 if (!roleResult.Succeeded) return BadRequest(roleResult.Errors);
 
                 return new UserDto
