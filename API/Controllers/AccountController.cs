@@ -92,7 +92,7 @@ namespace API.Controllers
 
                 if (!result.Succeeded) return Unauthorized();
 
-                var roleResult = await _userManager.AddToRoleAsync(appUser, "Member");
+                var roleResult = await _userManager.AddToRoleAsync(appUser, "Member"); 
 
                 if (!roleResult.Succeeded) return BadRequest(roleResult.Errors);
 
